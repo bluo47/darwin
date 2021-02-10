@@ -6,7 +6,7 @@ package darwin;
  */
 
 public class World {
-	
+	private Matrix<Creature> world;
 	private int width, height;
 	/**
 	 * This function creates a new world consisting of width columns and height
@@ -18,7 +18,7 @@ public class World {
 		width = w;
 		height = h;
 		
-		Matrix world = new Matrix(height, width);
+		world = new Matrix<Creature>(height, width);
 		
 		
 	}
@@ -61,7 +61,11 @@ public class World {
 	 * @throws IllegalArgumentException if pos is not in range
 	 */
 	public void set(Position pos, Creature e) {
-		// FIX
+		if (!inRange(pos)) {
+			throw new IllegalArgumentException("pos is not in range.");
+		} else {
+			world.set(pos.getX(), pos.getY(), e);
+		}
 	}
 
 	/**
@@ -71,7 +75,11 @@ public class World {
 	 */
 	public Creature get(Position pos) {
 		// BE CAREFUL: think about how x,y translates to row/col in a matrix
-		return null; // FIX
+		if (!inRange(pos)) {
+			throw new IllegalArgumentException("pos is not in range.");
+		} else {
+			return world.get(pos.getX(), pos.getY());
+		}
 	}
 
 }
