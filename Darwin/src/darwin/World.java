@@ -6,7 +6,8 @@ package darwin;
  */
 
 public class World {
-
+	
+	private int width, height;
 	/**
 	 * This function creates a new world consisting of width columns and height
 	 * rows, each of which is numbered beginning at 0. A newly created world
@@ -14,20 +15,26 @@ public class World {
 	 */
 	public World(int w, int h) {
 		// BE CAREFUL: think about how width/heights translates to row/col in a matrix
+		width = w;
+		height = h;
+		
+		Matrix world = new Matrix(height, width);
+		
+		
 	}
 
 	/**
 	 * Returns the height of the world.
 	 */
 	public int height() {
-		return 0; // FIX
+		return height; // FIX
 	}
 
 	/**
 	 * Returns the width of the world.
 	 */
 	public int width() {
-		return 0; // FIX
+		return width; // FIX
 	}
 
 	/**
@@ -36,7 +43,16 @@ public class World {
 	 * returns true *if* pos is an (x,y) location within the bounds of the board.
 	 */
 	public boolean inRange(Position pos) {
-		return false; // FIX
+		for (int i = 0; i < height; i++) {
+			if (i == pos.getX()) {
+				for (int j = 0; i < width; j++) {
+					if (i == pos.getY()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
