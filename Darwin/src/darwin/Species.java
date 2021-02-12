@@ -30,9 +30,15 @@ public class Species {
 			this.name = name;
 			this.color = color;
 			speciesChar = name.charAt(0);
-			for (int i = 2; in != null; i++) {
+			while (in != null) {
 				String nextLine = in.readLine();
-				//program.set(i, );
+				int opcode;
+				String address;
+				if (nextLine.split(nextLine).length > 1) {
+					String[] split = nextLine.split(nextLine);
+					
+				}
+				program.add(nextLine);
 			}
 			
 			// insert code to read from Creatures file here (use readLine() )
