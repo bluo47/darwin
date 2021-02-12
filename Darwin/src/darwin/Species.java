@@ -23,9 +23,15 @@ public class Species {
 	 * Create a species for the given fileReader. 
 	 */
 	public Species(BufferedReader fileReader) {
-	/*		try {
-				
-				// insert code to read from Creatures file here (use readLine() )
+			try {
+			BufferedReader in = new BufferedReader(fileReader);
+			String name = in.readLine();
+			String color = in.readLine();
+			this.name = name;
+			this.color = color;
+			speciesChar = name.charAt(0);
+			
+			// insert code to read from Creatures file here (use readLine() )
 			} catch (IOException e) {
 				System.out.println(
 					"Could not read file '"
@@ -33,7 +39,7 @@ public class Species {
 						+ "'");
 				System.exit(1);
 			}
-	*/	
+		
 	}
 
 
@@ -41,28 +47,28 @@ public class Species {
 	* Return the char for the species
 	*/
 	public char getSpeciesChar() {
-		return ' ';		// FIX
+		return speciesChar;
 	}
 
 	/**
 	 * Return the name of the species.
 	 */
 	public String getName() {
-		return null;    // FIX
+		return name;
 	}
 
 	/**
 	 * Return the color of the species.
 	 */
 	public String getColor() {
-		return null;    // FIX
+		return color;
 	}
 
 	/**
 	 * Return the number of instructions in the program.
 	 */
 	public int programSize() {
-		return 0;    // FIX
+		return program.size()-1;
 	}
 
 	/**
@@ -85,6 +91,21 @@ public class Species {
 			s = s + (i) + ": " + programStep(i) + "\n";
 		}
 		return s;
+	}
+	
+	public static void main(String args[]) {
+		try {
+			BufferedReader in
+			= new BufferedReader(new FileReader("C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
+			Species rover = new Species(in);
+			System.out.println(rover.getName());
+			System.out.println(rover.getColor());
+			System.out.println(rover.getSpeciesChar());
+			
+		} catch (FileNotFoundException e) {
+			System.err.println("File not found");
+			System.err.println(e.getMessage());
+		}
 	}
 
 }
