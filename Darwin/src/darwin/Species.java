@@ -30,6 +30,10 @@ public class Species {
 			this.name = name;
 			this.color = color;
 			speciesChar = name.charAt(0);
+			for (int i = 2; in != null; i++) {
+				String nextLine = in.readLine();
+				//program.set(i, );
+			}
 			
 			// insert code to read from Creatures file here (use readLine() )
 			} catch (IOException e) {
