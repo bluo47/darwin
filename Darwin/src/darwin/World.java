@@ -27,14 +27,14 @@ public class World {
 	 * Returns the height of the world.
 	 */
 	public int height() {
-		return height; // FIX
+		return height;
 	}
 
 	/**
 	 * Returns the width of the world.
 	 */
 	public int width() {
-		return width; // FIX
+		return width;
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class World {
 
 	public static void main(String args[]) {
 		World w = new World(5, 6);
-		//System.out.println(w.height());
-		//System.out.println(w.width());
+		System.out.println(w.height());
+		System.out.println(w.width());
 		
 		World w2 = new World(5,3);
 		Position p2 = new Position(4,2);
