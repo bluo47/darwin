@@ -153,6 +153,7 @@ public class Species {
 	public static void main(String args[]) {
 		try {
 			
+			//Rover tests
 			BufferedReader in
 			= new BufferedReader(new FileReader("Creatures/Rover.txt"));
 					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
@@ -165,7 +166,7 @@ public class Species {
 			System.out.println(rover.programStep(3)); //ifsame 6
 			
 			
-			
+			//Flytrap tests
 			BufferedReader in2
 			= new BufferedReader(new FileReader("Creatures/Flytrap.txt"));					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
 			Species fly = new Species(in2);
@@ -173,6 +174,29 @@ public class Species {
 			System.out.println(fly.getColor());
 			System.out.println(fly.getSpeciesChar());
 			System.out.println(fly.programSize());
+			System.out.println(fly.programStep(1)); //ifenemy 4
+			
+			//Food tests
+			BufferedReader in3
+			= new BufferedReader(new FileReader("Creatures/Food.txt"));					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
+			Species food = new Species(in3);
+			System.out.println(food.getName());
+			System.out.println(food.getColor());
+			System.out.println(food.getSpeciesChar());
+			System.out.println(food.programSize());
+			System.out.println(food.programStep(2)); //go 1
+			
+			//Hop tests
+			BufferedReader in4
+			= new BufferedReader(new FileReader("Creatures/Hop.txt"));					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
+			Species hop = new Species(in4);
+			System.out.println(hop.getName());
+			System.out.println(hop.getColor());
+			System.out.println(hop.getSpeciesChar());
+			System.out.println(hop.programSize());
+			System.out.println(hop.programStep(1)); //hop, go figure!
+			System.out.println(hop.programToString());
+			
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
