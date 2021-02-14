@@ -43,9 +43,9 @@ public class World {
 	 * returns true *if* pos is an (x,y) location within the bounds of the board.
 	 */
 	public boolean inRange(Position pos) {
-		for (int i = 0; i < height; i++) {
+		for (int i = 1; i <= width; i++) {
 			if (i == pos.getX()) {
-				for (int j = 0; j < width; j++) {
+				for (int j = 1; j <= height; j++) {
 					if (j == pos.getY()) {
 						return true;
 					}
@@ -62,7 +62,7 @@ public class World {
 	 */
 	public void set(Position pos, Creature e) {
 		if (!inRange(pos)) {
-			throw new IllegalArgumentException("pos is not in range.");
+			throw new IllegalArgumentException("pos is not in range1.");
 		} else {
 			world.set(pos.getX(), pos.getY(), e);
 		}
@@ -76,7 +76,7 @@ public class World {
 	public Creature get(Position pos) {
 		// BE CAREFUL: think about how x,y translates to row/col in a matrix
 		if (!inRange(pos)) {
-			throw new IllegalArgumentException("pos is not in range.");
+			throw new IllegalArgumentException("pos is not in range2.");
 		} else {
 			return world.get(pos.getX(), pos.getY());
 		}
@@ -85,13 +85,20 @@ public class World {
 
 	public static void main(String args[]) {
 		World w = new World(5, 6);
-		System.out.println(w.height());
-		System.out.println(w.width());
+		//System.out.println(w.height());
+		//System.out.println(w.width());
+		
+		World w2 = new World(5,3);
+		Position p2 = new Position(4,2);
+		//System.out.println(String.valueOf(w2.inRange(p2))); //true
 		
 		Position goodp = new Position(1,2);
-		Position badp = new Position(7,3);
-		System.out.println(String.valueOf(inRange(goodp))); //true
-		System.out.println(inRange(bapp)); ///false
+		Position badp = new Position(6,5);
+		
+		//System.out.println(String.valueOf(w.inRange(goodp))); //true
+		//System.out.println(String.valueOf(w.inRange(badp))); //false
+		
+		w2.world.checkRowCol(3,4);
 		
 		
 		
