@@ -45,8 +45,8 @@ public class World {
 	public boolean inRange(Position pos) {
 		for (int i = 0; i < height; i++) {
 			if (i == pos.getX()) {
-				for (int j = 0; i < width; j++) {
-					if (i == pos.getY()) {
+				for (int j = 0; j < width; j++) {
+					if (j == pos.getY()) {
 						return true;
 					}
 				}
@@ -82,4 +82,18 @@ public class World {
 		}
 	}
 
-}
+
+	public static void main(String args[]) {
+		World w = new World(5, 6);
+		System.out.println(w.height());
+		System.out.println(w.width());
+		
+		Position goodp = new Position(1,2);
+		Position badp = new Position(7,3);
+		System.out.println(String.valueOf(inRange(goodp))); //true
+		System.out.println(inRange(bapp)); ///false
+		
+		
+		
+	}
+	}

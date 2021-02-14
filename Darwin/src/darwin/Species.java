@@ -168,7 +168,8 @@ public class Species {
 			
 			//Flytrap tests
 			BufferedReader in2
-			= new BufferedReader(new FileReader("Creatures/Flytrap.txt"));					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
+			= new BufferedReader(new FileReader("Creatures/Flytrap.txt"));
+			// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
 			Species fly = new Species(in2);
 			System.out.println(fly.getName());
 			System.out.println(fly.getColor());
@@ -178,7 +179,7 @@ public class Species {
 			
 			//Food tests
 			BufferedReader in3
-			= new BufferedReader(new FileReader("Creatures/Food.txt"));					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
+			= new BufferedReader(new FileReader("Creatures/Food.txt"));
 			Species food = new Species(in3);
 			System.out.println(food.getName());
 			System.out.println(food.getColor());
@@ -188,7 +189,7 @@ public class Species {
 			
 			//Hop tests
 			BufferedReader in4
-			= new BufferedReader(new FileReader("Creatures/Hop.txt"));					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
+			= new BufferedReader(new FileReader("Creatures/Hop.txt"));
 			Species hop = new Species(in4);
 			System.out.println(hop.getName());
 			System.out.println(hop.getColor());
