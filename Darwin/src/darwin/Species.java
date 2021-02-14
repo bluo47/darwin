@@ -2,6 +2,7 @@ package darwin;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The individual creatures in the world are all representatives of some
@@ -30,51 +31,61 @@ public class Species {
 			this.name = name;
 			this.color = color;
 			speciesChar = name.charAt(0);
+			ArrayList<Instruction> program = new ArrayList<Instruction>();
+			
+			Instruction instruct;
 			while (in != null) {
 				String nextLine = in.readLine();
-				int opcode;
-				String address;
-				int intAddress;
-				if (nextLine.split(nextLine).length > 1) {
+
+				String opcode;
+				int address;
+
+				if (nextLine.split(" ").length > 1) {
 					// ifempty, ifwall, ifsame, ifenemy, ifrandom, go (require address)
-					String[] split = nextLine.split(nextLine);
-					opcode = Integer.valueOf(split[0]);
-					address = split[1];
-					if( address.equals("ifempty")) {
-						intAddress = 5;
-					}else if( address.equals("ifwall")) {
-						intAddress = 6;				
-					}else if( address.equals("ifsame")) {
-						intAddress = 7;
-					}else if( address.equals("ifenemy")) {
-						intAddress = 8;
-					}else if( address.equals("ifrandom")) {
-						intAddress = 9;
-					}else if( address.equals("go")) {
-						intAddress = 10;
-					}
+					String[] split = nextLine.split(" ");
 					
-					Instruction instruct = new Instruction(opcode, intAddress);
+					opcode = split[0];
+					int intOpcode = 0;
+					address = Integer.valueOf(split[1]);
+					
+					if( opcode.equals("ifempty")) {
+						System.out.println("hi there");
+						
+						intOpcode = 5;
+					}else if( opcode.equals("ifwall")) {
+						intOpcode = 6;				
+					}else if( opcode.equals("ifsame")) {
+						intOpcode = 7;
+					}else if( opcode.equals("ifenemy")) {
+						intOpcode = 8;
+					}else if( opcode.equals("ifrandom")) {
+						intOpcode = 9;
+					}else if( opcode.equals("go")) {
+						intOpcode = 10;
+					} 
+					instruct = new Instruction(intOpcode, address);
 					program.add(instruct);
+
 										
 				}else { //hop, left, right, infect (do not require an address)	
-					address = nextLine;
-					if(address.equals("hop")) {
-						intAddress = 1;
-					}else if(address.equals("left")) {
-						intAddress = 2;
-					}else if( address.equals("right")) {
-						intAddress = 3;
-					}else if( address.equals("go")) {
-						intAddress = 10;
+					opcode = nextLine;
+					
+					int intOpcode = 0;
+					if(opcode.equals("hop")) {
+						intOpcode = 1;
+					}else if( opcode.equals("left")) {
+						intOpcode = 2;
+					}else if( opcode.equals("right")) {
+						intOpcode = 3;
+					}else if( opcode.equals("go")) {
+						intOpcode = 10;
 					}
-					Instruction instruct = new Instruction(0, intAddress);
+					instruct = new Instruction(intOpcode, 0);
 					program.add(instruct);
 					
 				}
 				
-			}
-			
+				}
 			// insert code to read from Creatures file here (use readLine() )
 			} catch (IOException e) {
 				System.out.println(
@@ -121,7 +132,7 @@ public class Species {
 	 * @post returns instruction i of the program.
 	 */
 	public Instruction programStep(int i) {
-		return null;    // FIX
+		return program.get(i-1);   // FIX
 		// return program.get[i]
 	}
 
@@ -147,6 +158,7 @@ public class Species {
 			System.out.println(rover.getName());
 			System.out.println(rover.getColor());
 			System.out.println(rover.getSpeciesChar());
+			System.out.println(rover.programSize());
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
