@@ -36,7 +36,7 @@ public class Species {
 			
 			String nextLine = in.readLine();
 			
-			while (nextLine != null ) {
+			while (! nextLine.isEmpty() ) {
 				
 				String opcode;
 				int address;
@@ -124,7 +124,7 @@ public class Species {
 	 * Return the number of instructions in the program.
 	 */
 	public int programSize() {
-		return program.size()-2;
+		return program.size();
 	}
 
 	/**
@@ -152,16 +152,18 @@ public class Species {
 	
 	public static void main(String args[]) {
 		try {
+			
 			BufferedReader in
 			= new BufferedReader(new FileReader("Creatures/Rover.txt"));
 					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
 			Species rover = new Species(in);
-			System.out.println(rover.getName());
-			System.out.println(rover.getColor());
-			System.out.println(rover.getSpeciesChar());
-			System.out.println(rover.programSize());
-			System.out.println(rover.programToString());
-			System.out.println(rover.programStep(3));
+			System.out.println(rover.getName()); //Rover
+			System.out.println(rover.getColor()); //red
+			System.out.println(rover.getSpeciesChar()); //R
+			System.out.println(rover.programSize()); //12
+			//System.out.println(rover.programToString());
+			System.out.println(rover.programStep(3)); //ifsame 6
+			
 			
 			
 			BufferedReader in2
