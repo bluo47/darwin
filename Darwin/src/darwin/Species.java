@@ -31,12 +31,13 @@ public class Species {
 			this.name = name;
 			this.color = color;
 			speciesChar = name.charAt(0);
-			ArrayList<Instruction> program = new ArrayList<Instruction>();
-			
+			program = new ArrayList<Instruction>();
 			Instruction instruct;
-			while (in != null) {
-				String nextLine = in.readLine();
-
+			
+			String nextLine = in.readLine();
+			
+			while (nextLine != null ) {
+				
 				String opcode;
 				int address;
 
@@ -77,14 +78,14 @@ public class Species {
 						intOpcode = 2;
 					}else if( opcode.equals("right")) {
 						intOpcode = 3;
-					}else if( opcode.equals("go")) {
-						intOpcode = 10;
+					}else if( opcode.equals("infect")) {
+						intOpcode = 4;
 					}
 					instruct = new Instruction(intOpcode, 0);
 					program.add(instruct);
 					
 				}
-				
+			nextLine = in.readLine();
 				}
 			// insert code to read from Creatures file here (use readLine() )
 			} catch (IOException e) {
@@ -123,7 +124,7 @@ public class Species {
 	 * Return the number of instructions in the program.
 	 */
 	public int programSize() {
-		return program.size()-1;
+		return program.size()-2;
 	}
 
 	/**
@@ -159,6 +160,17 @@ public class Species {
 			System.out.println(rover.getColor());
 			System.out.println(rover.getSpeciesChar());
 			System.out.println(rover.programSize());
+			System.out.println(rover.programToString());
+			System.out.println(rover.programStep(3));
+			
+			
+			BufferedReader in2
+			= new BufferedReader(new FileReader("Creatures/Flytrap.txt"));					// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
+			Species fly = new Species(in2);
+			System.out.println(fly.getName());
+			System.out.println(fly.getColor());
+			System.out.println(fly.getSpeciesChar());
+			System.out.println(fly.programSize());
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
