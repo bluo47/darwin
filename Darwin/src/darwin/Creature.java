@@ -10,7 +10,14 @@ import java.util.*;
  * The creature is also responsible for making itself appear in the WorldMap. In
  * fact, you should only update the WorldMap from inside the Creature class.
  */
+
 public class Creature {
+	
+	private Species species;
+	private World world;
+	private Position pos;
+	private int dir;
+	private int nextInstructNum;
 
 	/**
 	 * Create a creature of the given species, with the indicated position and
@@ -19,34 +26,41 @@ public class Creature {
 	 * when the creature moves.
 	 */
 	public Creature(Species species, World world, Position pos, int dir) {
+		this.species = species;
+		this.world = world;
+		this.pos = pos;
+		this.dir = dir;
+		//set the creature's next instruction as the species' program's first instruction
+		nextInstructNum = 1;
+		
 	}
 
 	/**
 	 * Return the species of the creature.
 	 */
 	public Species species() {
-		return null; // fix
+		return species;
 	}
 
 	/**
 	 * Return the current direction of the creature.
 	 */
 	public int direction() {
-		return 0; // fix
+		return dir;
 	}
 
 	/**
 	 * Sets the current direction of the creature to the given value 
 	 */
 	public void setDirection(int dir){
-		//fix
+		this.dir = dir;
 	}
 
 	/**
 	 * Return the position of the creature.
 	 */
 	public Position position() {
-		return null; // fix
+		return pos;
 	}
 
 	/**
@@ -55,6 +69,30 @@ public class Creature {
 	 *   continue until a hop, left, right, or infect instruction is executed.
 	 */
 	public void takeOneTurn() {
+		Instruction nextInstruction;
+		nextInstruction = species.programStep(nextInstructNum);
+		
+		int tempAddress = nextInstruction.getAddress();
+		int tempOpcode = nextInstruction.getOpcode();
+		
+		//hoop
+		if( tempOpcode == 1) {
+			
+		//left	
+		}else if( tempOpcode == 2) {
+		
+			
+		//right
+		}else if( tempOpcode == 3) {
+		
+			
+		//infect
+		}else if (tempOpcode == 4) {
+		}
+		
+		
+		//update the program index to the next instruction
+		nextInstructNum = nextInstructNum + 1;
 	}
 
 	/**
