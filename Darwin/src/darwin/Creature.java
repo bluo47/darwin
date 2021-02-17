@@ -75,11 +75,28 @@ public class Creature {
 		int tempAddress = nextInstruction.getAddress();
 		int tempOpcode = nextInstruction.getOpcode();
 		
-		//hoop
+		//hop
 		if( tempOpcode == 1) {
+			//north
+			if (dir == 0) {
+				// update position
+				pos.
+			
+			//south
+			}else if (dir == 1) {
+			
+			//east	
+			}else if (dir == 2) {
+			
+				
+			//west
+			}else {
+				
+			}
 			
 		//left	
 		}else if( tempOpcode == 2) {
+			
 		
 			
 		//right
