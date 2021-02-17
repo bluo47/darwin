@@ -38,56 +38,68 @@ public class Species {
 			
 			while (! nextLine.isEmpty() ) {
 				
-				String opcode;
+				String instruction;
 				int address;
 
 				if (nextLine.split(" ").length > 1) {
-					// ifempty, ifwall, ifsame, ifenemy, ifrandom, go (require address)
+					// for instructions with addresses:
+					// ifempty, ifwall, ifsame, ifenemy, ifrandom, go
+					// separate and identify the instruction & address
 					String[] split = nextLine.split(" ");
-					
-					opcode = split[0];
-					int intOpcode = 0;
+
+					instruction = split[0];
 					address = Integer.valueOf(split[1]);
 					
-					if( opcode.equals("ifempty")) {
-						System.out.println("hi there");
-						
-						intOpcode = 5;
-					}else if( opcode.equals("ifwall")) {
-						intOpcode = 6;				
-					}else if( opcode.equals("ifsame")) {
-						intOpcode = 7;
-					}else if( opcode.equals("ifenemy")) {
-						intOpcode = 8;
-					}else if( opcode.equals("ifrandom")) {
-						intOpcode = 9;
-					}else if( opcode.equals("go")) {
-						intOpcode = 10;
+					int opcode = 0;
+					
+					// assign the correct opcode for the given instruction
+					if( instruction.equals("ifempty")) {
+						opcode = 5;
+					}else if( instruction.equals("ifwall")) {
+						opcode = 6;				
+					}else if( instruction.equals("ifsame")) {
+						opcode = 7;
+					}else if( instruction.equals("ifenemy")) {
+						opcode = 8;
+					}else if( instruction.equals("ifrandom")) {
+						opcode = 9;
+					}else if( instruction.equals("go")) {
+						opcode = 10;
 					} 
-					instruct = new Instruction(intOpcode, address);
+					instruct = new Instruction(opcode, address);
+					
+					// add the new instruction to the program
 					program.add(instruct);
 
 										
-				}else { //hop, left, right, infect (do not require an address)	
-					opcode = nextLine;
+				}else { 
+					//instructions: hop, left, right, and infect 
+					//do not require an address	
+					instruction = nextLine;
 					
-					int intOpcode = 0;
-					if(opcode.equals("hop")) {
-						intOpcode = 1;
-					}else if( opcode.equals("left")) {
-						intOpcode = 2;
-					}else if( opcode.equals("right")) {
-						intOpcode = 3;
-					}else if( opcode.equals("infect")) {
-						intOpcode = 4;
+					int opcode = 0;
+					
+					// assign the correct opcode for the given instruction
+					if( instruction.equals("hop")) {
+						opcode = 1;
+					}else if( instruction.equals("left")) {
+						opcode = 2;
+					}else if( instruction.equals("right")) {
+						opcode = 3;
+					}else if( instruction.equals("infect")) {
+						opcode = 4;
 					}
-					instruct = new Instruction(intOpcode, 0);
+					instruct = new Instruction(opcode, 0);
+					
+					// add the new instruction to the program
 					program.add(instruct);
 					
 				}
+				
 			nextLine = in.readLine();
+			
 				}
-			// insert code to read from Creatures file here (use readLine() )
+			
 			} catch (IOException e) {
 				System.out.println(
 					"Could not read file '"
@@ -133,8 +145,7 @@ public class Species {
 	 * @post returns instruction i of the program.
 	 */
 	public Instruction programStep(int i) {
-		return program.get(i-1);   // FIX
-		// return program.get[i]
+		return program.get(i-1);
 	}
 
 	/**
@@ -171,31 +182,31 @@ public class Species {
 			= new BufferedReader(new FileReader("Creatures/Flytrap.txt"));
 			// "C:\\Users\\Benjamin\\git\\assign3-benl\\Darwin\\Creatures\\Rover.txt"));
 			Species fly = new Species(in2);
-			System.out.println(fly.getName());
-			System.out.println(fly.getColor());
-			System.out.println(fly.getSpeciesChar());
-			System.out.println(fly.programSize());
+			System.out.println(fly.getName()); //Flytrap
+			System.out.println(fly.getColor()); //magenta
+			System.out.println(fly.getSpeciesChar()); //F
+			System.out.println(fly.programSize()); //5
 			System.out.println(fly.programStep(1)); //ifenemy 4
 			
 			//Food tests
 			BufferedReader in3
 			= new BufferedReader(new FileReader("Creatures/Food.txt"));
 			Species food = new Species(in3);
-			System.out.println(food.getName());
-			System.out.println(food.getColor());
-			System.out.println(food.getSpeciesChar());
-			System.out.println(food.programSize());
+			System.out.println(food.getName()); //Oodfay
+			System.out.println(food.getColor()); //green
+			System.out.println(food.getSpeciesChar()); //O
+			System.out.println(food.programSize()); //2
 			System.out.println(food.programStep(2)); //go 1
 			
 			//Hop tests
 			BufferedReader in4
 			= new BufferedReader(new FileReader("Creatures/Hop.txt"));
 			Species hop = new Species(in4);
-			System.out.println(hop.getName());
-			System.out.println(hop.getColor());
-			System.out.println(hop.getSpeciesChar());
-			System.out.println(hop.programSize());
-			System.out.println(hop.programStep(1)); //hop, go figure!
+			System.out.println(hop.getName()); //Hop
+			System.out.println(hop.getColor()); //blue
+			System.out.println(hop.getSpeciesChar()); //H
+			System.out.println(hop.programSize()); //2
+			System.out.println(hop.programStep(1)); //hop
 			System.out.println(hop.programToString());
 			
 			
