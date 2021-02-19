@@ -80,6 +80,8 @@ public class Creature {
 		//identify the address and opcode of the instruction
 		int tempAddress = nextInstruction.getAddress();
 		int tempOpcode = nextInstruction.getOpcode();
+		
+		Position adjacentSq = pos.getAdjacent(dir);
 
 		
 		//HOP
@@ -87,13 +89,14 @@ public class Creature {
 			
 			// only moves if the adjacent square exists in the world matrix
 			// and is unoccupied
-			if(world.inRange(pos.getAdjacent(dir)) ) {
-				if( world.get(pos.getAdjacent(dir)) == null) {
+			if( world.inRange(adjacentSq)) {
+				if( world.get(adjacentSq) == null) {
+			
 					// move the creature one square in its current direction
-					setPosition(pos.getAdjacent(dir));
-				}
+					setPosition(adjacentSq);
 			}
 			nextInstructNum ++;
+			}
 			
 			
 		//LEFT	
@@ -111,15 +114,15 @@ public class Creature {
 		}else if( tempOpcode == 4) {			
 			
 			// if the adjacent square is occupied,
-			if ( world.get(pos.getAdjacent(dir)) != null) {
+			if ( adjacentSq != null) {
 				
 				// if the adjacent square is occupied by an enemy,
 				// (not of the same creature) infect the enemy!
-				if ( !world.get(pos.getAdjacent(dir)).species().equals(species)) {
+				if ( !world.get(adjacentSq).species().equals(species)) {
 					
 					// create the new creature and put it in the world, adjacent to our creature
 					Creature newCreature = new Creature(species, world, pos.getAdjacent(dir), dir);
-					world.set(pos.getAdjacent(dir), newCreature);
+					world.set(adjacentSq, newCreature);
 					
 					// begin the newly infected creature at step n of the host's program
 					newCreature.nextInstructNum = tempAddress;
@@ -168,8 +171,90 @@ public class Creature {
 		
 
 		try {
+			
+			
+			// testing with enemy in the CASE WITH NO ENEMY
+			BufferedReader in = new BufferedReader(new FileReader("Creatures/InfectTest.txt"));
+			Species ifEnemyTest =  new Species(in);
+				
+			World w3 = new World (4,5);
+			Position pos3 = new Position(2,3);
+			int dir3 = 2;
+					
+			Creature c3 = new Creature(ifEnemyTest, w3, pos3, dir3);
+					
+			System.out.println("starting position & direction:");
+		
+			System.out.println(c3.pos); //(2,3)
+			System.out.println(c3.dir); //2
+					
+			System.out.println("Instruction: ifenemy 3");
+			c3.takeOneTurn(); //hop 	
+			
+			System.out.println(c3.pos); //(2,3)
+			System.out.println(c3.dir); //2
+			
+			System.out.println("Instruction: hop");
+			c3.takeOneTurn(); //hop 	
+			
+			System.out.println(c3.pos); //(2,4)
+			System.out.println(c3.dir); //2
+			
+			System.out.println("Instruction: right");
+			c3.takeOneTurn(); //hop 	
+			
+			System.out.println(c3.pos); //(2,4)
+			System.out.println(c3.dir); //3
+			
+			System.out.println("Instruction: hop");
+			c3.takeOneTurn(); //hop 
+			
+			System.out.println(c3.pos); //(1,4)
+			System.out.println(c3.dir); //2	
 		
 		/*
+		// testing with enemy in the CASE WITH NO ENEMY
+		BufferedReader in = new BufferedReader(new FileReader("Creatures/IfEnemyTest.txt"));
+		Species ifEnemyTest =  new Species(in);
+			
+		World w3 = new World (4,5);
+		Position pos3 = new Position(2,3);
+		int dir3 = 2;
+				
+		Creature c3 = new Creature(ifEnemyTest, w3, pos3, dir3);
+				
+		System.out.println("starting position & direction:");
+	
+		System.out.println(c3.pos); //(2,3)
+		System.out.println(c3.dir); //2
+				
+		System.out.println("Instruction: ifenemy 3");
+		c3.takeOneTurn(); //hop 	
+		
+		System.out.println(c3.pos); //(2,3)
+		System.out.println(c3.dir); //2
+		
+		System.out.println("Instruction: hop");
+		c3.takeOneTurn(); //hop 	
+		
+		System.out.println(c3.pos); //(2,4)
+		System.out.println(c3.dir); //2
+		
+		System.out.println("Instruction: right");
+		c3.takeOneTurn(); //hop 	
+		
+		System.out.println(c3.pos); //(2,4)
+		System.out.println(c3.dir); //3
+		
+		System.out.println("Instruction: hop");
+		c3.takeOneTurn(); //hop 
+		
+		System.out.println(c3.pos); //(1,4)
+		System.out.println(c3.dir); //2
+		/*
+		
+		
+		/*		// testing with enemy in the CASE WITH AN ENEMY PRESENT
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/IfEnemyTest.txt"));
 		Species ifEnemyTest =  new Species(in);
 			
@@ -190,25 +275,60 @@ public class Creature {
 		
 		System.out.println(c3.pos); //(2,1)
 		System.out.println(c3.dir); //2
-		*/
+		/*
 			
 			
 			
 		
-
-		
+		/*
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/Test1.txt"));
 		Species test1 =  new Species(in);
 		
-		World w2 = new World (10,8);
+		World w2 = new World (10,10);
 		Position pos2 = new Position(6,8);
 		int dir2 = 1;
 			
 		Creature c2 = new Creature(test1, w2, pos2, dir2);
 		
-		System.out.println(pos2.getAdjacent(dir2));
-		System.out.println(w2.inRange(pos2.getAdjacent(dir2)));
+		//System.out.println(pos2.getAdjacent(dir2));
+		//System.out.println(w2.inRange(pos2.getAdjacent(dir2)));
 		//System.out.println(w2.get(pos2.getAdjacent(dir2)));	
+		
+		// Checking that the position doesn't change if we're at a boundary or moving
+		// into another creature
+		
+		System.out.println(c2.pos); //(6,8)
+		System.out.println(c2.dir); //1
+		
+			
+		System.out.println("hop");
+		c2.takeOneTurn(); //hop 
+		
+		System.out.println(c2.pos); //(7, 8)
+		System.out.println(c2.dir); //1
+		
+		System.out.println("hop");
+		c2.takeOneTurn(); //hop 
+		
+		System.out.println(c2.pos); //(7,8)
+		System.out.println(c2.dir); // 0
+		
+		System.out.println("hop");
+		c2.takeOneTurn(); //hop
+		
+		System.out.println(c2.pos); //(7, 7)
+		System.out.println(c2.dir); // 0
+		
+		System.out.println("hop");
+		c2.takeOneTurn(); //hop 
+		
+		System.out.println(c2.pos); //(7, 7)
+		System.out.println(c2.dir); // 1
+		/*
+		
+
+		
+		/*
 		System.out.println(c2.pos); //(6,8)
 		System.out.println(c2.dir); //1
 		
@@ -267,9 +387,10 @@ public class Creature {
 		System.out.println("right");
 		
 		System.out.println(c2.pos); //(8,6)
+		
 		System.out.println(c2.dir); //1
 		
-		
+		/*
 		
 		
 			

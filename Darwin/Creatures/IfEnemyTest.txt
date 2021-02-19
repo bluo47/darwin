@@ -3,4 +3,5 @@ blue
 ifenemy 3
 hop
 right
+hop
 

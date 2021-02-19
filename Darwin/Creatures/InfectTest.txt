@@ -1,0 +1,6 @@
+InfectTest
+black
+hop
+infect 4
+right
+hop
