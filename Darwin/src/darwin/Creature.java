@@ -84,9 +84,13 @@ public class Creature {
 		
 		//hop
 		if( tempOpcode == 1) {
-			// move the creature one square in its current direction
-			setPosition(pos.getAdjacent(dir));
-			nextInstructNum ++;
+			// only if the adjacent square exists in the world matrix,
+			if(world.inRange(pos.getAdjacent(dir))) {
+				// move the creature one square in its current direction
+				setPosition(pos.getAdjacent(dir));
+				nextInstructNum ++;
+			}
+			
 			
 		//left	
 		}else if( tempOpcode == 2) {
@@ -98,6 +102,14 @@ public class Creature {
 		}else if( tempOpcode == 3) {
 			setDirection(rightFrom(dir));
 			nextInstructNum ++;
+			
+		//infect n
+		}else if( tempOpcode == 4) {			
+			if ( world.get(pos.getAdjacent(dir)) != null) {
+				
+			}
+			nextInstructNum = tempAddress;
+	
 			
 		
 		//go	
@@ -132,12 +144,32 @@ public class Creature {
 
 		try {
 		
+		BufferedReader in = new BufferedReader(new FileReader("Creatures/IfEnemyTest.txt"));
+		Species ifEnemyTest =  new Species(in);
 			
+		World w3 = new World (4,5);
+		Position pos3 = new Position(6,7);
+		int dir3 = 2;
+				
+		Creature c3 = new Creature(ifEnemyTest, w3, pos3, dir3);
+				
+		System.out.println(c3.pos); //(2,1)
+		System.out.println(c3.dir); //2
+				
+		System.out.println("hop");
+		c3.takeOneTurn(); //hop 	
+		
+			
+			
+			
+			
+		
+
 		/*
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/Test1.txt"));
 		Species test1 =  new Species(in);
 		
-		World w2 = new World (6,8);
+		World w2 = new World (9,8);
 		Position pos2 = new Position(6,8);
 		int dir2 = 1;
 			
@@ -195,7 +227,7 @@ public class Creature {
 		System.out.println(c2.pos); //(8,6)
 		System.out.println(c2.dir); //0
 		
-		//next instructino should be line 4's, which is a right turn
+		//next instruction should be line 4's, which is a right turn
 		c2.takeOneTurn(); //right
 		System.out.println("right");
 		
@@ -237,6 +269,7 @@ public class Creature {
 		
 		System.out.println(c1.pos); //(3,0)
 		System.out.println(c1.dir); //0
+		
 		*/
 		
 		

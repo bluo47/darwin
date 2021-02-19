@@ -1,0 +1,6 @@
+IfEnemyTest
+blue
+ifenemy 3
+hop
+right
+

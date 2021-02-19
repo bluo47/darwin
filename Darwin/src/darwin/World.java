@@ -105,7 +105,7 @@ public class World {
 		World w2 = new World(5,3);
 		Position p2 = new Position(4,2);
 		System.out.println(String.valueOf(w2.inRange(p2))); //true
-		
+
 		
 		
 	}
