@@ -188,29 +188,35 @@ public class Creature {
 			System.out.println(c3.pos); //(2,3)
 			System.out.println(c3.dir); //2
 					
-			System.out.println("Instruction: ifenemy 3");
-			c3.takeOneTurn(); //hop 	
-			
-			System.out.println(c3.pos); //(2,3)
-			System.out.println(c3.dir); //2
-			
 			System.out.println("Instruction: hop");
-			c3.takeOneTurn(); //hop 	
+			c3.takeOneTurn();  	
 			
-			System.out.println(c3.pos); //(2,4)
-			System.out.println(c3.dir); //2
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //
 			
 			System.out.println("Instruction: right");
-			c3.takeOneTurn(); //hop 	
+			c3.takeOneTurn(); 
 			
-			System.out.println(c3.pos); //(2,4)
-			System.out.println(c3.dir); //3
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //
+			
+			System.out.println("Instruction: infect 4");
+			c3.takeOneTurn(); 
+			
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //
+			
+			System.out.println("Instruction: right");
+			c3.takeOneTurn(); //hop 
+			
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //	
 			
 			System.out.println("Instruction: hop");
 			c3.takeOneTurn(); //hop 
 			
-			System.out.println(c3.pos); //(1,4)
-			System.out.println(c3.dir); //2	
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //	
 		
 		/*
 		// testing with enemy in the CASE WITH NO ENEMY
