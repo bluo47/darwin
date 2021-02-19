@@ -4,3 +4,6 @@ hop
 infect 4
 right
 hop
+
+
+InfectTest should now run
