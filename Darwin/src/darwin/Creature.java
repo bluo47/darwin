@@ -75,17 +75,23 @@ public class Creature {
 		
 		int tempAddress = nextInstruction.getAddress();
 		int tempOpcode = nextInstruction.getOpcode();
+		System.out.println(tempOpcode);
+		
 		
 		int pos_x = pos.getX();
 		int pos_y = pos.getY();
+
 		
 		//hop
 		if( tempOpcode == 1) {
+
 			
 			//north
 			if (dir == 0) {
 				// update position
 				pos_y --;
+				
+				this.pos = new Position(pos_x, pos_y);
 			
 			//east
 			}else if (dir == 1) {
@@ -99,6 +105,7 @@ public class Creature {
 			}else {
 				pos_x --;
 			}
+			
 			
 		//left	
 		}else if( tempOpcode == 2) {
@@ -193,6 +200,7 @@ public class Creature {
 	}
 	
 	public static void main (String[] args) {
+
 		
 		try {
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/Hop.txt"));
@@ -204,12 +212,19 @@ public class Creature {
 		
 		Creature c1 = new Creature(hop, w, pos, dir);
 		
+		System.out.println(pos);
+		System.out.println(dir);
+		
+		c1.takeOneTurn();
+		System.out.println(pos);
+		System.out.println(dir);
 		
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
 			System.err.println(e.getMessage());
 		}
+
 		
 		
 	}
