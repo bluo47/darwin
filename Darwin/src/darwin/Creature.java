@@ -86,29 +86,31 @@ public class Creature {
 		if( tempOpcode == 1) {
 			// move the creature one square in its current direction
 			setPosition(pos.getAdjacent(dir));
+			nextInstructNum ++;
 			
 		//left	
 		}else if( tempOpcode == 2) {
 			setDirection(leftFrom(dir));
+			nextInstructNum ++;
 
 			
 		//right
 		}else if( tempOpcode == 3) {
 			setDirection(rightFrom(dir));
+			nextInstructNum ++;
 			
 		
 		//go	
 		}else if ( tempOpcode == 10) {
+			nextInstructNum = tempAddress;
 			
-			for (int i = 0; i < tempAddress; i ++) {
-				setPosition(pos.getAdjacent(dir));
 			}	
 		}	
 		
 		
 		//update the program index to the next instruction
-		nextInstructNum = nextInstructNum + 1;
-	}
+		
+	
 
 	/**
 	 * Return the compass direction that is 90 degrees left of the one passed in.
@@ -130,6 +132,8 @@ public class Creature {
 
 		try {
 		
+			
+		/*
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/Test1.txt"));
 		Species test1 =  new Species(in);
 		
@@ -173,16 +177,34 @@ public class Creature {
 		System.out.println(c2.dir); // 1
 		
 		System.out.println("left");
-		c2.takeOneTurn(); //hop
+		c2.takeOneTurn(); //left
 		
 		System.out.println(c2.pos); //(8,7)
 		System.out.println(c2.dir); // 0
 		
 		System.out.println("go 3");
-		c2.takeOneTurn(); //hop
+		c2.takeOneTurn(); //go 3
 		
-		System.out.println(c2.pos); //(8,4)
+		System.out.println(c2.pos); //(8,7)
 		System.out.println(c2.dir); // 0
+		
+		//should now be at line 3, which is a hop
+		c2.takeOneTurn(); //hop
+		System.out.println("hop");
+		
+		System.out.println(c2.pos); //(8,6)
+		System.out.println(c2.dir); //0
+		
+		//next instructino should be line 4's, which is a right turn
+		c2.takeOneTurn(); //right
+		System.out.println("right");
+		
+		System.out.println(c2.pos); //(8,6)
+		System.out.println(c2.dir); //1
+		*/
+		
+		
+		
 			
 			
 		/*
@@ -190,18 +212,31 @@ public class Creature {
 		Species hop =  new Species(in);
 		
 		World w1 = new World (5, 5);
-		Position pos = new Position(3, 2);
-		int dir = 0;
+		Position pos1 = new Position(3, 2);
+		int dir1 = 0;
 		
 		Creature c1 = new Creature(hop, w1, pos1, dir1);
 		
-		System.out.println(c1.pos1); //(3,2)
-		System.out.println(c1.dir1); //0
+		System.out.println(c1.pos); //(3,2)
+		System.out.println(c1.dir); //0
 		
-		c1.takeOneTurn();
+		c1.takeOneTurn(); //hop
+		System.out.println("hop");
 		
-		System.out.println(c1.pos1); //(3,1)
-		System.out.println(c1.dir1); //0
+		System.out.println(c1.pos); //(3,1)
+		System.out.println(c1.dir); //0
+		
+		c1.takeOneTurn(); //go 1
+		System.out.println("go 1");
+		
+		System.out.println(c1.pos); //(3,1)
+		System.out.println(c1.dir); //0
+		
+		c1.takeOneTurn(); //hop
+		System.out.println("hop (line 1), again");
+		
+		System.out.println(c1.pos); //(3,0)
+		System.out.println(c1.dir); //0
 		*/
 		
 		
