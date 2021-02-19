@@ -63,6 +63,10 @@ public class Creature {
 	public Position position() {
 		return pos;
 	}
+	
+	public void setPosition(Position pos) {
+		this.pos = pos;
+	}
 
 	/**
 	 * Execute steps from the Creature's program
@@ -85,99 +89,29 @@ public class Creature {
 		//hop
 		if( tempOpcode == 1) {
 
+			// why doesn't this actually update the position when
+			// called in the main function??
 			
-			//north
-			if (dir == 0) {
-				// update position
-				pos_y --;
-				
-				this.pos = new Position(pos_x, pos_y);
-			
-			//east
-			}else if (dir == 1) {
-				pos_x ++;
-			
-			//south	
-			}else if (dir == 2) {
-				pos_y ++;
-				
-			//west
-			}else {
-				pos_x --;
-			}
+			setPosition(pos.getAdjacent(dir));
 			
 			
 		//left	
 		}else if( tempOpcode == 2) {
-			
-			//north
-			if (dir == 0) {
-				// update position
-				dir = 3;
-			
-			//east
-			}else if (dir == 1) {
-				dir = 0;
-			
-			//south	
-			}else if (dir == 2) {
-				dir = 1;
-				
-			//west
-			}else {
-				dir = 2;
-			}
+			setDirection(leftFrom(dir));
+
 			
 		//right
 		}else if( tempOpcode == 3) {
-		
-			//north
-			if (dir == 0) {
-				// update position
-				dir = 1;
+			setDirection(rightFrom(dir));
 			
-			//east
-			}else if (dir == 1) {
-				dir = 2;
-			
-			//south	
-			}else if (dir == 2) {
-				dir = 3;
-				
-			//west
-			}else {
-				dir = 0;
-			}
 		
 		//go	
 		}else if ( tempOpcode == 10) {
-
 			
-			//north
-			if (dir == 0) {
-				// update position
-				pos_y -= tempAddress;
-			
-			//east
-			}else if (dir == 1) {
-				pos_x += tempAddress;
-			
-			//south	
-			}else if (dir == 2) {
-				pos_y += tempAddress;
-				
-			//west
-			}else {
-				pos_x -= tempAddress;
-			}
-			
-			
+			for (int i = 0; i < tempAddress; i ++) {
+				pos.getAdjacent(dir);
+			}	
 		}	
-			//infect
-		//}else if (tempOpcode == 4) {
-			
-		
-		
 		
 		
 		//update the program index to the next instruction
@@ -185,7 +119,7 @@ public class Creature {
 	}
 
 	/**
-	 * Return the compass direction the is 90 degrees left of the one passed in.
+	 * Return the compass direction that is 90 degrees left of the one passed in.
 	 */
 	public static int leftFrom(int direction) {
 		return (4 + direction - 1) % 4;
@@ -201,23 +135,25 @@ public class Creature {
 	
 	public static void main (String[] args) {
 
-		
 		try {
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/Hop.txt"));
 		Species hop =  new Species(in);
 		
 		World w = new World (5, 5);
-		Position pos = new Position(3, 3);
+		Position pos = new Position(3, 2);
 		int dir = 0;
 		
 		Creature c1 = new Creature(hop, w, pos, dir);
 		
-		System.out.println(pos);
-		System.out.println(dir);
+		System.out.println(pos); //(3,2)
+		System.out.println(dir); //0
 		
 		c1.takeOneTurn();
-		System.out.println(pos);
-		System.out.println(dir);
+		
+		System.out.println(c1.pos); //(3,1)
+		System.out.println(dir); //0
+		
+		System.out.println(rightFrom(dir)); //1
 		
 		
 		} catch (FileNotFoundException e) {
