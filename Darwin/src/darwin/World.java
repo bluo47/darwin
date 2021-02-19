@@ -10,8 +10,6 @@ public class World {
 	// world is a matrix of Creatures
 	private Matrix<Creature> world;
 	
-	// height and width of the world
-	private int height, width;
 	/**
 	 * This function creates a new world consisting of width columns and height
 	 * rows, each of which is numbered beginning at 0. A newly created world
@@ -19,12 +17,10 @@ public class World {
 	 */
 	public World(int w, int h) {
 		// BE CAREFUL: think about how width/heights translates to row/col in a matrix
-		
-		height = h;
-		width = w;
+
 		
 		// height = rows, width = columns
-		world = new Matrix<Creature>(height, width);
+		world = new Matrix<Creature>(h, w);
 
 		
 		
@@ -34,14 +30,14 @@ public class World {
 	 * Returns the height of the world.
 	 */
 	public int height() {
-		return height;
+		return world.numRows();
 	}
 
 	/**
 	 * Returns the width of the world.
 	 */
 	public int width() {
-		return width;
+		return world.numCols();
 	}
 
 	/**
@@ -50,17 +46,10 @@ public class World {
 	 * returns true *if* pos is an (x,y) location within the bounds of the board.
 	 */
 	public boolean inRange(Position pos) {
-		for (int i = 0; i < height+1; i++) {
-			if (i == pos.getY()) {
-				for (int j = 0; j < width+1; j++) {
-					if (j == pos.getX()) {
-						return true;
-					}
-				}
-			}
+		return (pos.getX() >= 0 && pos.getX() < width() && 
+				pos.getY() >= 0 && pos.getY() < height()) ;
 		}
-		return false;
-	}
+
 
 	/**
 	 * Set a position on the board to contain e.
@@ -97,7 +86,7 @@ public class World {
 		System.out.println(w.width()); //5
 		
 		Position goodp = new Position(1,2);
-		Position badp = new Position(5,7);
+		Position badp = new Position(5,6);
 		
 		System.out.println(String.valueOf(w.inRange(goodp))); //true
 		System.out.println(String.valueOf(w.inRange(badp))); //false
