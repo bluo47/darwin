@@ -68,7 +68,6 @@ public class Species {
 					} 
 					
 					Instruction instruct = new Instruction(opcode, address);
-					System.out.println(instruct);
 					
 					// add the new instruction to the program
 					program.add(instruct);

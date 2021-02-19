@@ -85,15 +85,16 @@ public class Creature {
 		//HOP
 		if( tempOpcode == 1) {
 			
-			// only if the adjacent square exists 
-			// and & is unoccupied in the world matrix,??????
-			// something like, world.get(pos.getAdjacent(dir)) == null ?
-			if(world.inRange(pos.getAdjacent(dir))) {
-				
-				// move the creature one square in its current direction
-				setPosition(pos.getAdjacent(dir));
-				nextInstructNum ++;
+			// only moves if the adjacent square exists in the world matrix
+			// and is unoccupied
+			if(world.inRange(pos.getAdjacent(dir)) ) {
+				if( world.get(pos.getAdjacent(dir)) == null) {
+					// move the creature one square in its current direction
+					setPosition(pos.getAdjacent(dir));
+				}
 			}
+			nextInstructNum ++;
+			
 			
 		//LEFT	
 		}else if( tempOpcode == 2) {
@@ -168,39 +169,49 @@ public class Creature {
 
 		try {
 		
+		/*
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/IfEnemyTest.txt"));
 		Species ifEnemyTest =  new Species(in);
 			
 		World w3 = new World (4,5);
-		Position pos3 = new Position(6,7);
+		Position pos3 = new Position(2,3);
 		int dir3 = 2;
 				
 		Creature c3 = new Creature(ifEnemyTest, w3, pos3, dir3);
 				
-		System.out.println(c3.pos); //(2,1)
+		System.out.println(c3.pos); //(2,3)
 		System.out.println(c3.dir); //2
 				
 		System.out.println("hop");
 		c3.takeOneTurn(); //hop 	
 		
-			
+		System.out.println(c3.pos); //(3,3)
+		System.out.println(c3.dir); //2
+		
+		System.out.println(c3.pos); //(2,1)
+		System.out.println(c3.dir); //2
+		*/
 			
 			
 			
 		
 
-		/*
+		
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/Test1.txt"));
 		Species test1 =  new Species(in);
 		
-		World w2 = new World (9,8);
+		World w2 = new World (10,8);
 		Position pos2 = new Position(6,8);
 		int dir2 = 1;
 			
 		Creature c2 = new Creature(test1, w2, pos2, dir2);
-			
+		
+		System.out.println(pos2.getAdjacent(dir2));
+		System.out.println(w2.inRange(pos2.getAdjacent(dir2)));
+		//System.out.println(w2.get(pos2.getAdjacent(dir2)));	
 		System.out.println(c2.pos); //(6,8)
 		System.out.println(c2.dir); //1
+		
 			
 		System.out.println("hop");
 		c2.takeOneTurn(); //hop 
@@ -257,7 +268,7 @@ public class Creature {
 		
 		System.out.println(c2.pos); //(8,6)
 		System.out.println(c2.dir); //1
-		*/
+		
 		
 		
 		
