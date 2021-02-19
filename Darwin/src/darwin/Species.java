@@ -32,7 +32,6 @@ public class Species {
 			this.color = color;
 			speciesChar = name.charAt(0);
 			program = new ArrayList<Instruction>();
-			Instruction instruct;
 			
 			String nextLine = in.readLine();
 			
@@ -60,13 +59,16 @@ public class Species {
 					}else if( instruction.equals("ifsame")) {
 						opcode = 7;
 					}else if( instruction.equals("ifenemy")) {
+						System.out.println("working");
 						opcode = 8;
 					}else if( instruction.equals("ifrandom")) {
 						opcode = 9;
 					}else if( instruction.equals("go")) {
 						opcode = 10;
 					} 
-					instruct = new Instruction(opcode, address);
+					
+					Instruction instruct = new Instruction(opcode, address);
+					System.out.println(instruct);
 					
 					// add the new instruction to the program
 					program.add(instruct);
@@ -89,7 +91,7 @@ public class Species {
 					}else if( instruction.equals("infect")) {
 						opcode = 4;
 					}
-					instruct = new Instruction(opcode, 0);
+					Instruction instruct = new Instruction(opcode, 0);
 					
 					// add the new instruction to the program
 					program.add(instruct);
@@ -177,6 +179,9 @@ public class Species {
 			System.out.println(rover.programStep(3)); //ifsame 6
 			
 			
+			
+			/*
+			
 			//Flytrap tests
 			BufferedReader in2
 			= new BufferedReader(new FileReader("Creatures/Flytrap.txt"));
@@ -208,12 +213,12 @@ public class Species {
 			System.out.println(hop.programSize()); //2
 			System.out.println(hop.programStep(1)); //hop
 			System.out.println(hop.programToString());
-			
+			*/
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
 			System.err.println(e.getMessage());
 		}
-	}
+	} 
 
 }
