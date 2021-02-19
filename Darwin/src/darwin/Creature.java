@@ -1,5 +1,6 @@
 package darwin;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -75,37 +76,101 @@ public class Creature {
 		int tempAddress = nextInstruction.getAddress();
 		int tempOpcode = nextInstruction.getOpcode();
 		
+		int pos_x = pos.getX();
+		int pos_y = pos.getY();
+		
 		//hop
 		if( tempOpcode == 1) {
+			
 			//north
 			if (dir == 0) {
 				// update position
-				pos.
+				pos_y --;
 			
-			//south
+			//east
 			}else if (dir == 1) {
+				pos_x ++;
 			
-			//east	
+			//south	
 			}else if (dir == 2) {
-			
+				pos_y ++;
 				
 			//west
 			}else {
-				
+				pos_x --;
 			}
 			
 		//left	
 		}else if( tempOpcode == 2) {
 			
-		
+			//north
+			if (dir == 0) {
+				// update position
+				dir = 3;
+			
+			//east
+			}else if (dir == 1) {
+				dir = 0;
+			
+			//south	
+			}else if (dir == 2) {
+				dir = 1;
+				
+			//west
+			}else {
+				dir = 2;
+			}
 			
 		//right
 		}else if( tempOpcode == 3) {
 		
+			//north
+			if (dir == 0) {
+				// update position
+				dir = 1;
 			
-		//infect
-		}else if (tempOpcode == 4) {
-		}
+			//east
+			}else if (dir == 1) {
+				dir = 2;
+			
+			//south	
+			}else if (dir == 2) {
+				dir = 3;
+				
+			//west
+			}else {
+				dir = 0;
+			}
+		
+		//go	
+		}else if ( tempOpcode == 10) {
+
+			
+			//north
+			if (dir == 0) {
+				// update position
+				pos_y -= tempAddress;
+			
+			//east
+			}else if (dir == 1) {
+				pos_x += tempAddress;
+			
+			//south	
+			}else if (dir == 2) {
+				pos_y += tempAddress;
+				
+			//west
+			}else {
+				pos_x -= tempAddress;
+			}
+			
+			
+		}	
+			//infect
+		//}else if (tempOpcode == 4) {
+			
+		
+		
 		
 		
 		//update the program index to the next instruction
@@ -125,5 +190,27 @@ public class Creature {
 	 */
 	public static int rightFrom(int direction) {
 		return (direction + 1) % 4;
+	}
+	
+	public static void main (String[] args) {
+		
+		try {
+		BufferedReader in = new BufferedReader(new FileReader("Creatures/Hop.txt"));
+		Species hop =  new Species(in);
+		
+		World w = new World (5, 5);
+		Position pos = new Position(3, 3);
+		int dir = 0;
+		
+		Creature c1 = new Creature(hop, w, pos, dir);
+		
+		
+		
+		} catch (FileNotFoundException e) {
+			System.err.println("File not found");
+			System.err.println(e.getMessage());
+		}
+		
+		
 	}
 }
