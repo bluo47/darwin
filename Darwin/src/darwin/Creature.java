@@ -82,37 +82,61 @@ public class Creature {
 		int tempOpcode = nextInstruction.getOpcode();
 
 		
-		//hop
+		//HOP
 		if( tempOpcode == 1) {
-			// only if the adjacent square exists in the world matrix,
+			
+			// only if the adjacent square exists 
+			// and & is unoccupied in the world matrix,??????
+			// something like, world.get(pos.getAdjacent(dir)) == null ?
 			if(world.inRange(pos.getAdjacent(dir))) {
+				
 				// move the creature one square in its current direction
 				setPosition(pos.getAdjacent(dir));
 				nextInstructNum ++;
 			}
 			
-			
-		//left	
+		//LEFT	
 		}else if( tempOpcode == 2) {
 			setDirection(leftFrom(dir));
 			nextInstructNum ++;
 
 			
-		//right
+		//RIGHT
 		}else if( tempOpcode == 3) {
 			setDirection(rightFrom(dir));
 			nextInstructNum ++;
 			
-		//infect n
+		//INFECT N
 		}else if( tempOpcode == 4) {			
+			
+			// if the adjacent square is occupied,
 			if ( world.get(pos.getAdjacent(dir)) != null) {
 				
+				// if the adjacent square is occupied by an enemy,
+				// (not of the same creature) infect the enemy!
+				if ( !world.get(pos.getAdjacent(dir)).species().equals(species)) {
+					
+					// create the new creature and put it in the world, adjacent to our creature
+					Creature newCreature = new Creature(species, world, pos.getAdjacent(dir), dir);
+					world.set(pos.getAdjacent(dir), newCreature);
+					
+					// begin the newly infected creature at step n of the host's program
+					newCreature.nextInstructNum = tempAddress;
+				}
+		
+
 			}
-			nextInstructNum = tempAddress;
+			// if the address is missing, assign it 1
+			if ( nextInstructNum == 0) {
+				nextInstructNum = 1;
+			}else {
+				nextInstructNum = tempAddress;
+			}
+			
 	
 			
 		
-		//go	
+		//GO	
 		}else if ( tempOpcode == 10) {
 			nextInstructNum = tempAddress;
 			
