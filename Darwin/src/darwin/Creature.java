@@ -77,23 +77,15 @@ public class Creature {
 		Instruction nextInstruction;
 		nextInstruction = species.programStep(nextInstructNum);
 		
+		//identify the address and opcode of the instruction
 		int tempAddress = nextInstruction.getAddress();
 		int tempOpcode = nextInstruction.getOpcode();
-		System.out.println(tempOpcode);
-		
-		
-		int pos_x = pos.getX();
-		int pos_y = pos.getY();
 
 		
 		//hop
 		if( tempOpcode == 1) {
-
-			// why doesn't this actually update the position when
-			// called in the main function??
-			
+			// move the creature one square in its current direction
 			setPosition(pos.getAdjacent(dir));
-			
 			
 		//left	
 		}else if( tempOpcode == 2) {
@@ -109,7 +101,7 @@ public class Creature {
 		}else if ( tempOpcode == 10) {
 			
 			for (int i = 0; i < tempAddress; i ++) {
-				pos.getAdjacent(dir);
+				setPosition(pos.getAdjacent(dir));
 			}	
 		}	
 		
@@ -134,26 +126,83 @@ public class Creature {
 	}
 	
 	public static void main (String[] args) {
+		
 
 		try {
+		
+		BufferedReader in = new BufferedReader(new FileReader("Creatures/Test1.txt"));
+		Species test1 =  new Species(in);
+		
+		World w2 = new World (6,8);
+		Position pos2 = new Position(6,8);
+		int dir2 = 1;
+			
+		Creature c2 = new Creature(test1, w2, pos2, dir2);
+			
+		System.out.println(c2.pos); //(6,8)
+		System.out.println(c2.dir); //1
+			
+		System.out.println("hop");
+		c2.takeOneTurn(); //hop 
+		
+		System.out.println(c2.pos); //(7, 8)
+		System.out.println(c2.dir); //1
+		
+		System.out.println("turn left");
+		c2.takeOneTurn(); //left
+		
+		System.out.println(c2.pos); //(7,8)
+		System.out.println(c2.dir); // 0
+		
+		System.out.println("hop");
+		c2.takeOneTurn(); //hop
+		
+		System.out.println(c2.pos); //(7, 7)
+		System.out.println(c2.dir); // 0
+		
+		System.out.println("turn right");
+		c2.takeOneTurn(); //right
+		
+		System.out.println(c2.pos); //(7, 7)
+		System.out.println(c2.dir); // 1
+		
+		System.out.println("hop");
+		c2.takeOneTurn(); //hop
+		
+		System.out.println(c2.pos); //(8,7)
+		System.out.println(c2.dir); // 1
+		
+		System.out.println("left");
+		c2.takeOneTurn(); //hop
+		
+		System.out.println(c2.pos); //(8,7)
+		System.out.println(c2.dir); // 0
+		
+		System.out.println("go 3");
+		c2.takeOneTurn(); //hop
+		
+		System.out.println(c2.pos); //(8,4)
+		System.out.println(c2.dir); // 0
+			
+			
+		/*
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/Hop.txt"));
 		Species hop =  new Species(in);
 		
-		World w = new World (5, 5);
+		World w1 = new World (5, 5);
 		Position pos = new Position(3, 2);
 		int dir = 0;
 		
-		Creature c1 = new Creature(hop, w, pos, dir);
+		Creature c1 = new Creature(hop, w1, pos1, dir1);
 		
-		System.out.println(pos); //(3,2)
-		System.out.println(dir); //0
+		System.out.println(c1.pos1); //(3,2)
+		System.out.println(c1.dir1); //0
 		
 		c1.takeOneTurn();
 		
-		System.out.println(c1.pos); //(3,1)
-		System.out.println(dir); //0
-		
-		System.out.println(rightFrom(dir)); //1
+		System.out.println(c1.pos1); //(3,1)
+		System.out.println(c1.dir1); //0
+		*/
 		
 		
 		} catch (FileNotFoundException e) {

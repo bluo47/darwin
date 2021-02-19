@@ -1,0 +1,11 @@
+Test1
+blue
+hop
+left
+hop
+right
+hop
+left
+go 3
+
+This is the first test Creature
