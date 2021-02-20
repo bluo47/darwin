@@ -77,12 +77,14 @@ public class Creature {
 
 		Instruction nextInstruction;
 		nextInstruction = species.programStep(nextInstructNum);
-		System.out.println(nextInstruction);
+		System.out.println("Next Instruction:" + nextInstruction);
 
-		//identify the address and opcode of the instruction
+		//identify the opcode and address of the instruction
+		int tempOpcode = nextInstruction.getOpcode();
+		System.out.println("Opcode: " + tempOpcode);
 		int tempAddress = nextInstruction.getAddress();
 		System.out.println("Address: " + tempAddress);
-		int tempOpcode = nextInstruction.getOpcode();
+
 
 		Position adjacentSq = pos.getAdjacent(dir);
 
@@ -116,8 +118,8 @@ public class Creature {
 			//INFECT N
 		}else if( tempOpcode == 4) {			
 
-			// if the adjacent square is occupied,
-			if ( adjacentSq != null) {
+			// if the adjacent square exists and is occupied,
+			if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
 
 				// if the adjacent square is occupied by an enemy,
 				// (not of the same creature) infect the enemy!
@@ -136,20 +138,24 @@ public class Creature {
 					infectedCreature.nextInstructNum = tempAddress;
 
 				}
+			}else {
+
 				// if the address is missing, assign it as 1
-				if ( nextInstructNum == 0) {
+				if ( tempAddress == 0) {
 					nextInstructNum = 1;
 				}else {
 					nextInstructNum = tempAddress;
-				}
+				}				
 			}
+				
+
+			
 
 
 
 
 			//GO	
 		}else {
-			System.out.println("hi there");
 			nextInstructNum = tempAddress;
 		}
 	}
@@ -181,22 +187,79 @@ public class Creature {
 
 		try {
 
-			/*
-			// testing with enemy in the CASE WITH NO ENEMY
+			// testing infect n in the CASE WITH NO ENEMY
 			BufferedReader in = new BufferedReader(new FileReader("Creatures/InfectTest.txt"));
-			Species ifEnemyTest =  new Species(in);
-
+			Species infectTestWithEnemy =  new Species(in);
+			
+			BufferedReader in2 = new BufferedReader(new FileReader("Creatures/Food.txt"));
+			Species enemy =  new Species(in2);
+			
+			
 			World w3 = new World (5,5);
 			Position pos3 = new Position(2,2);
 			int dir3 = 2;
 
-			Creature c3 = new Creature(ifEnemyTest, w3, pos3, dir3);
+			Creature c3 = new Creature(infectTestWithEnemy, w3, pos3, dir3);
+			
+			//enemy is planted in (2,3)
+			//Creature enemy3 = new Creature(enemy, w3, pos3.getAdjacent(dir3), dir3);
+			//w3.set(pos3.getAdjacent(dir3), enemy3);
+			
+			System.out.println("Infector Species:" + c3.species());
+			//System.out.println("Enemy Species: " + enemy3.species());
+	
 
 			System.out.println("starting position & direction:");
 
 			System.out.println(c3.pos); //(2,2)
 			System.out.println(c3.dir); //2
 
+			c3.takeOneTurn();  	//hop
+
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //
+
+			//System.out.println("Instruction: infect");
+			c3.takeOneTurn(); 
+
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //
+			
+			//System.out.println("Enemy's 'new' Species: " + enemy3.species());
+
+			//System.out.println("Instruction: hop");
+			c3.takeOneTurn(); 
+
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //
+
+			//System.out.println("Instruction: infect");
+			c3.takeOneTurn();  
+
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //	
+
+			//System.out.println("Instruction: hop");
+			c3.takeOneTurn();  
+
+			System.out.println(c3.pos); //
+			System.out.println(c3.dir); //				
+			
+			/*
+			// testing infect n in the CASE WITH NO ENEMY
+			BufferedReader in = new BufferedReader(new FileReader("Creatures/InfectTest.txt"));
+			Species infectTest =  new Species(in);
+
+			World w3 = new World (5,5);
+			Position pos3 = new Position(2,2);
+			int dir3 = 2;
+
+			Creature c3 = new Creature(infectTest, w3, pos3, dir3);
+
+			System.out.println("starting position & direction:");
+
+			System.out.println(c3.pos); //(2,2)
+			System.out.println(c3.dir); //2
 
 			c3.takeOneTurn();  	//hop
 
@@ -226,9 +289,10 @@ public class Creature {
 
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //	
-		/*
+			*/
 
-		/*
+
+			/*
 		// testing with enemy in the CASE WITH NO ENEMY
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/IfEnemyTest.txt"));
 		Species ifEnemyTest =  new Species(in);
@@ -411,7 +475,7 @@ public class Creature {
 
 
 
-
+			/*
 			BufferedReader in = new BufferedReader(new FileReader("Creatures/Hop.txt"));
 			Species hop =  new Species(in);
 
@@ -441,7 +505,7 @@ public class Creature {
 
 			System.out.println(c1.pos); //(3,0)
 			System.out.println(c1.dir); //0
-
+			 */
 
 
 
