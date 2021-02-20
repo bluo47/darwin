@@ -104,18 +104,18 @@ public class Creature {
 			}
 
 
-			//LEFT	
+		//LEFT	
 		}else if( tempOpcode == 2) {
 			setDirection(leftFrom(dir));
 			nextInstructNum ++;
 
 
-			//RIGHT
+		//RIGHT
 		}else if( tempOpcode == 3) {
 			setDirection(rightFrom(dir));
 			nextInstructNum ++;
 
-			//INFECT N
+		//INFECT
 		}else if( tempOpcode == 4) {			
 
 			// if the adjacent square exists and is occupied,
@@ -138,6 +138,7 @@ public class Creature {
 					infectedCreature.nextInstructNum = tempAddress;
 
 				}
+
 			}else {
 
 				// if the address is missing, assign it as 1
@@ -147,14 +148,75 @@ public class Creature {
 					nextInstructNum = tempAddress;
 				}				
 			}
-				
-
+		//IFEMPTY
+		}else if( tempOpcode == 5) {
 			
+			// if the adjacent square exists and is UNOCCUPIED,
+			// update the next instruction to the provided address
+			if( world.inRange(adjacentSq) && world.get(adjacentSq) == null) {	
+				nextInstructNum = tempAddress;
+				
+			}else { //otherwise, proceed to the next sequential instruction
+				nextInstructNum ++;
+			}
+			
+		//IFWALL
+		}else if( tempOpcode == 6) {
+			
+			// if the adjacent square does not exist, (creature is facing
+			// a wall), update the next instruction to the provided address
+			if( !world.inRange(adjacentSq)) {	
+				nextInstructNum = tempAddress;
+			}else { //otherwise, proceed to the next sequential instruction
+				nextInstructNum ++;
+			}
+			
+		//IFSAME
+		}else if( tempOpcode == 7) {
+		
+			// if the adjacent square exists and is occupied,
+			if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
 
+				// if the adjacent square is occupied by a creature
+				// of the same species, update the next instruction to the provided address
+				if ( world.get(adjacentSq).species() == species) {	
+					nextInstructNum = tempAddress;
+				}
+			}else {//otherwise, proceed to the next sequential instruction
+				nextInstructNum ++;
+			}
+			
+		//IFENEMY
+		}else if( tempOpcode == 8) {
+			
+			// if the adjacent square exists and is occupied,
+			if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
 
+				// if the adjacent square is occupied by a creature
+				// of a DIFFERENT species, update the next instruction 
+				// to the provided address
+				if ( world.get(adjacentSq).species() != species) {	
+					nextInstructNum = tempAddress;
+				}
+			}else { //otherwise, proceed to the next sequential instruction
+				nextInstructNum ++;			
+			}
+			
+		//IFRANDOM, a.k.a. 'free will'
+		}else if( tempOpcode == 9) {
+			Random rand = new Random();
+			int int_random = rand.nextInt(100);
+			
+			// if the random number is even, update the next 
+			// instruction to the provided address
+			if (int_random % 2 == 0) {
+				nextInstructNum = tempAddress;
+			
+			}else { //otherwise, proceed to the next sequential instruction
+				nextInstructNum ++;
+			}
 
-
-			//GO	
+		//GO	
 		}else {
 			nextInstructNum = tempAddress;
 		}
@@ -190,24 +252,23 @@ public class Creature {
 			// testing infect n in the CASE WITH NO ENEMY
 			BufferedReader in = new BufferedReader(new FileReader("Creatures/InfectTest.txt"));
 			Species infectTestWithEnemy =  new Species(in);
-			
+
 			BufferedReader in2 = new BufferedReader(new FileReader("Creatures/Food.txt"));
 			Species enemy =  new Species(in2);
-			
-			
+
+
 			World w3 = new World (5,5);
 			Position pos3 = new Position(2,2);
 			int dir3 = 2;
 
 			Creature c3 = new Creature(infectTestWithEnemy, w3, pos3, dir3);
-			
+
 			//enemy is planted in (2,3)
 			//Creature enemy3 = new Creature(enemy, w3, pos3.getAdjacent(dir3), dir3);
 			//w3.set(pos3.getAdjacent(dir3), enemy3);
-			
+
 			System.out.println("Infector Species:" + c3.species());
 			//System.out.println("Enemy Species: " + enemy3.species());
-	
 
 			System.out.println("starting position & direction:");
 
@@ -224,7 +285,7 @@ public class Creature {
 
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //
-			
+
 			//System.out.println("Enemy's 'new' Species: " + enemy3.species());
 
 			//System.out.println("Instruction: hop");
@@ -244,7 +305,7 @@ public class Creature {
 
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //				
-			
+
 			/*
 			// testing infect n in the CASE WITH NO ENEMY
 			BufferedReader in = new BufferedReader(new FileReader("Creatures/InfectTest.txt"));
@@ -289,7 +350,7 @@ public class Creature {
 
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //	
-			*/
+			 */
 
 
 			/*
