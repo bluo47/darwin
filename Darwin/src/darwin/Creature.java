@@ -94,15 +94,11 @@ public class Creature {
 
 			// only moves if the adjacent square exists in the world matrix
 			// and is unoccupied
-			if( world.inRange(adjacentSq)) {
-				if( world.get(adjacentSq) == null) {
-
+			if( world.inRange(adjacentSq) && (world.get(adjacentSq) == null)) {
 					// move the creature one square in its current direction
 					setPosition(adjacentSq);
 				}
 				nextInstructNum ++;
-			}
-
 
 		//LEFT	
 		}else if( tempOpcode == 2) {
@@ -136,12 +132,9 @@ public class Creature {
 
 					// begin the newly infected creature at step n of the host's program
 					infectedCreature.nextInstructNum = tempAddress;
-
 				}
 
-			}else {
-
-				// if the address is missing, assign it as 1
+			}else {	// if the address is missing, assign it as 1
 				if ( tempAddress == 0) {
 					nextInstructNum = 1;
 				}else {
@@ -223,12 +216,6 @@ public class Creature {
 	}
 
 
-
-
-	//update the program index to the next instruction
-
-
-
 	/**
 	 * Return the compass direction that is 90 degrees left of the one passed in.
 	 */
@@ -264,11 +251,11 @@ public class Creature {
 			Creature c3 = new Creature(infectTestWithEnemy, w3, pos3, dir3);
 
 			//enemy is planted in (2,3)
-			//Creature enemy3 = new Creature(enemy, w3, pos3.getAdjacent(dir3), dir3);
-			//w3.set(pos3.getAdjacent(dir3), enemy3);
+			Creature enemy3 = new Creature(enemy, w3, pos3.getAdjacent(dir3), dir3);
+			w3.set(pos3.getAdjacent(dir3), enemy3);
 
 			System.out.println("Infector Species:" + c3.species());
-			//System.out.println("Enemy Species: " + enemy3.species());
+			System.out.println("Enemy Species: " + enemy3.species());
 
 			System.out.println("starting position & direction:");
 
@@ -280,27 +267,23 @@ public class Creature {
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //
 
-			//System.out.println("Instruction: infect");
 			c3.takeOneTurn(); 
 
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //
 
-			//System.out.println("Enemy's 'new' Species: " + enemy3.species());
+			System.out.println("Enemy's 'new' Species: " + enemy3.species());
 
-			//System.out.println("Instruction: hop");
 			c3.takeOneTurn(); 
 
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //
 
-			//System.out.println("Instruction: infect");
 			c3.takeOneTurn();  
 
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //	
 
-			//System.out.println("Instruction: hop");
 			c3.takeOneTurn();  
 
 			System.out.println(c3.pos); //
