@@ -1,0 +1,7 @@
+RandomTest
+yellow
+ifrandom 3
+right
+left
+
+

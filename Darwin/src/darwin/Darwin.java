@@ -25,6 +25,39 @@ import java.io.*;
 class Darwin {
 
 	public Darwin(String[] speciesFilenames) {
+		
+		World world = new World(10, 10);
+	
+		for( int i = 0; i < speciesFilenames.length; i++) {
+
+			try {
+			BufferedReader in = new BufferedReader(new FileReader(speciesFilenames[i]));
+			Species speciesTemp =  new Species(in);
+			
+			boolean isNull = true;
+			Random rand = new Random();
+			Creature c;
+			
+			while (isNull == true) {
+				int x = rand.nextInt(10);
+				int y = rand.nextInt(10);
+				int dir = rand.nextInt(4);
+				Position pos = new Position(x, y);
+				if (world.get(pos) == null) {
+					c = new Creature(speciesTemp, world, pos, dir);
+					world.set(pos, c);
+					isNull = false;
+					
+				}
+			}
+			
+			}
+			catch (FileNotFoundException e) {
+				System.err.println("File not found");
+				System.err.println(e.getMessage());
+			}
+		}
+
 	}
 
 	/**
@@ -46,12 +79,19 @@ class Darwin {
 	 * creatures they should be of the form "./Creatures/Hop.txt".
 	 */
 	public static void main(String s[]) {
-		Darwin d = new Darwin(s);
+		WorldMap.createWorldMap(10, 10);
+		//Darwin d = new Darwin(s);
+		String[] temp = {"./Creatures/Hop.txt", "./Creatures/Rover.txt"};
+		Darwin d = new Darwin(temp);
 		d.simulate();
 	}
 
+	
 	public void simulate() {
-
+		//for (int rounds = 0; rounds < numRounds; rounds++) {
+			//  		giveEachCreatureOneTurn(); 
+			  //		WorldMap.pause(500); 
+			  	//} 
 		// don't forget to call pause somewhere in the simulator's loop...
 		// make sure to pause using WorldMap so that TAs can modify pause time
 		// when grading
