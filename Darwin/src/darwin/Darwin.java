@@ -23,11 +23,24 @@ import java.io.*;
  * 
  */
 class Darwin {
+	private World world;
+	private static int rows;
+	private static int cols;
+	ArrayList<Creature> CreatureArray;
+	
+
 
 	public Darwin(String[] speciesFilenames) {
 		
-		World world = new World(10, 10);
+		rows = 10;
+		cols = 10;
+		
+		
+		
+		//initialize world with constructor
+		World world = new World(rows, cols);
 	
+		//populate world
 		for( int i = 0; i < speciesFilenames.length; i++) {
 
 			try {
@@ -38,17 +51,25 @@ class Darwin {
 			Random rand = new Random();
 			Creature c;
 			
-			while (isNull == true) {
+			//make this go for the length of the array list, then update 
+			// the index at the end of each while loop if it passes. other
+			// wise, run it again at the same index ya know?
+			
+			while( isNull = true) {
 				int x = rand.nextInt(10);
 				int y = rand.nextInt(10);
 				int dir = rand.nextInt(4);
 				Position pos = new Position(x, y);
-				if (world.get(pos) == null) {
+				
+				if ( world.get(pos) == null) {
 					c = new Creature(speciesTemp, world, pos, dir);
-					world.set(pos, c);
-					isNull = false;
+					CreatureArray.add(c);
+				
 					
+				}else {
+					isNull = false;
 				}
+				
 			}
 			
 			}

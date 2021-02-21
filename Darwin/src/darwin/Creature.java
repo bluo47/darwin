@@ -87,31 +87,64 @@ public class Creature {
 
 
 		Position adjacentSq = pos.getAdjacent(dir);
-		String adjName = world.get(adjacentSq).species().getName();
 		String speciesName = species.getName();
 		
-		WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+		
+
+		
 		//HOP
 		if( tempOpcode == 1) {
 
 			// only moves if the adjacent square exists in the world matrix
 			// and is unoccupied
 			if( world.inRange(adjacentSq) && (world.get(adjacentSq) == null)) {
-					// move the creature one square in its current direction
-					setPosition(adjacentSq);
+				
+				// make our old position null/empty on the WorldMap
+				world.set(pos, null);
+				WorldMap.displaySquare(pos, ' ', 0, "");	
+				
+				// move the creature one square in its current direction
+				setPosition(adjacentSq);
 				}
+				
+				// update our new position on the WorldMap
+				world.set(pos, this);
+				WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+				
 				nextInstructNum ++;
+				
+				return;
 
 		//LEFT	
 		}else if( tempOpcode == 2) {
 			setDirection(leftFrom(dir));
+			
+			// make our old position null/empty
+			world.set(pos, null);
+			WorldMap.displaySquare(pos, ' ', 0, "");
+			
+			// update our new position on the WorldMap
+			world.set(pos, this);
+			WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+			
 			nextInstructNum ++;
+			return;
 
 
 		//RIGHT
 		}else if( tempOpcode == 3) {
 			setDirection(rightFrom(dir));
+			
+			// make our old position null/empty
+			world.set(pos, null);
+			WorldMap.displaySquare(pos, ' ', 0, "");
+			
+			// update our new position on the WorldMap
+			world.set(pos, this);
+			WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+			
 			nextInstructNum ++;
+			return;
 
 		//INFECT
 		}else if( tempOpcode == 4) {			
@@ -119,6 +152,7 @@ public class Creature {
 			// if the adjacent square exists and is occupied,
 			if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
 
+				String adjName = world.get(adjacentSq).species().getName();
 				// if the adjacent square is occupied by an enemy,
 				// (not of the same creature) infect the enemy!
 				if (!adjName.equals(speciesName)) {
@@ -137,12 +171,24 @@ public class Creature {
 				}
 
 			}else {	// if the address is missing, assign it as 1
+				
+				// make our old position null/empty
+				world.set(pos, null);
+				WorldMap.displaySquare(pos, ' ', 0, "");
+				
+				// update our new position on the WorldMap
+				world.set(pos, this);
+				WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+
+				
 				if ( tempAddress == 0) {
 					nextInstructNum = 1;
 				}else {
 					nextInstructNum = tempAddress;
 				}				
 			}
+			return;
+			
 		//IFEMPTY
 		}else if( tempOpcode == 5) {
 			
