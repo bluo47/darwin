@@ -52,7 +52,7 @@ class Darwin {
 			Creature c;
 			
 			//make this go for the length of the array list, then update 
-			// the index at the end of each while loop if it passes. other
+			//  the index at the end of each while loop if it passes. other
 			// wise, run it again at the same index ya know?
 			
 			while( isNull = true) {
