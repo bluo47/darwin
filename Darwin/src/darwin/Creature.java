@@ -205,7 +205,7 @@ public class Creature {
 					// WAIT FOR ANSWER
 					
 					nextInstructNum++;
-					this.takeOneTurn();;
+					return;
 				}
 
 
