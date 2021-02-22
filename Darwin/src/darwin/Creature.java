@@ -180,7 +180,7 @@ public class Creature {
 						world.set(adjacentSq, null);
 						WorldMap.displaySquare(adjacentSq, ' ', 0, "");
 						
-						// put it in the world, adjacent to our creature
+						// put it in the world, adjacent to our original creature
 						world.set(adjacentSq, infectedCreature);
 						WorldMap.displaySquare(adjacentSq, species.getSpeciesChar(), infectedCreature.dir, species.getColor());
 
@@ -199,6 +199,9 @@ public class Creature {
 					}
 
 				}else {  // if there's no enemy in front of us, just return
+					
+					// update our new position on the WorldMap
+					
 					nextInstructNum++;
 					return;
 				}
@@ -245,17 +248,19 @@ public class Creature {
 					if ( adjName.equals(speciesName)) {	
 						nextInstructNum = tempAddress;
 						this.takeOneTurn();
+						
 					}else {
+						nextInstructNum ++;
 						this.takeOneTurn();
 					}
 					
 					
-				}else {//otherwise, proceed to the next sequential instruction
+				}else { //otherwise, proceed to the next sequential instruction
 					nextInstructNum ++;
 					this.takeOneTurn();
 				}
 
-				//IFENEMY
+			//IFENEMY
 			}else if( tempOpcode == 8) {
 
 				// if the adjacent square exists and is occupied,
@@ -268,6 +273,10 @@ public class Creature {
 					// to the provided address
 					if ( !adjName.equals(speciesName)) {	
 						nextInstructNum = tempAddress;
+						this.takeOneTurn();
+					
+					}else {
+						nextInstructNum ++;
 						this.takeOneTurn();
 					}
 
