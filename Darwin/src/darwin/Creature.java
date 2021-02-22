@@ -175,52 +175,34 @@ public class Creature {
 						infectedCreature.species = species;
 						infectedCreature.world = world;
 						infectedCreature.pos = adjacentSq;
-						infectedCreature.dir = dir;
 
-						//remove the old creature from the World
+						// remove the old creature from the World
 						world.set(adjacentSq, null);
 						WorldMap.displaySquare(adjacentSq, ' ', 0, "");
 						
-						//put it in the world, adjacent to our creature
+						// put it in the world, adjacent to our creature
 						world.set(adjacentSq, infectedCreature);
-						WorldMap.displaySquare(adjacentSq, species.getSpeciesChar(), dir, species.getColor());
+						WorldMap.displaySquare(adjacentSq, species.getSpeciesChar(), infectedCreature.dir, species.getColor());
 
-						// begin the newly infected creature at step n of the host's program
-						infectedCreature.nextInstructNum = tempAddress++;
+						// begin the newly infected creature at step n of the host's program,
+						// or start it at step 1 if no address is given
+						if ( tempAddress == 0) {
+							infectedCreature.nextInstructNum = 1;
+						}else {
+							infectedCreature.nextInstructNum = tempAddress;
+						}	
 						
-						
-						// make our old position null/empty
-						world.set(pos, null);
-						WorldMap.displaySquare(pos, ' ', 0, "");
+						// update the creature's next instruction
+						nextInstructNum++;
+						return;
 
-						// update our new position on the WorldMap
-						world.set(pos, this);
-						WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
-						
-						nextInstructNum = tempAddress;
-						
-						
 					}
 
-				}else {
-
-					// make our old position null/empty
-					world.set(pos, null);
-					WorldMap.displaySquare(pos, ' ', 0, "");
-
-					// update our new position on the WorldMap
-					world.set(pos, this);
-					WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
-
-
-					if ( tempAddress == 0) {
-						nextInstructNum = 1;
-					}else {
-						nextInstructNum = tempAddress;
-					}				
+				}else {  // if there's no enemy in front of us, just return
+					nextInstructNum++;
+					return;
 				}
-				//end the turn
-				return;
+
 
 			//IFEMPTY
 			}else if( tempOpcode == 5) {
@@ -263,7 +245,11 @@ public class Creature {
 					if ( adjName.equals(speciesName)) {	
 						nextInstructNum = tempAddress;
 						this.takeOneTurn();
+					}else {
+						this.takeOneTurn();
 					}
+					
+					
 				}else {//otherwise, proceed to the next sequential instruction
 					nextInstructNum ++;
 					this.takeOneTurn();
@@ -284,6 +270,8 @@ public class Creature {
 						nextInstructNum = tempAddress;
 						this.takeOneTurn();
 					}
+
+					
 				}else { //otherwise, proceed to the next sequential instruction
 					nextInstructNum ++;
 					this.takeOneTurn();
