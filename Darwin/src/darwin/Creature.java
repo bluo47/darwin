@@ -202,8 +202,10 @@ public class Creature {
 					
 					// update our new position on the WorldMap
 					
+					// WAIT FOR ANSWER
+					
 					nextInstructNum++;
-					return;
+					this.takeOneTurn();;
 				}
 
 

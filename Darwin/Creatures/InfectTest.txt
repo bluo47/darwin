@@ -3,7 +3,5 @@ black
 hop
 infect
 left
+go 1
 
-
-InfectTest should now run. It should never go left since 
-infect should automatically go back to program[0] = hop.

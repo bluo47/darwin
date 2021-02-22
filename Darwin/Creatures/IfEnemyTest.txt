@@ -4,6 +4,7 @@ ifenemy 3
 hop
 right
 hop
+go 1
 
 This should now run :)
 
