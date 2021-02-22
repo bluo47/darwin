@@ -33,8 +33,8 @@ class Darwin {
 
 	public Darwin(String[] speciesFilenames) {
 
-		rows = 5;
-		cols = 5;
+		rows = 10;
+		cols = 10;
 
 
 
@@ -108,19 +108,22 @@ class Darwin {
 	 * creatures they should be of the form "./Creatures/Hop.txt".
 	 */
 	public static void main(String s[]) {
-		WorldMap.createWorldMap(5, 5);
+		WorldMap.createWorldMap(10, 10);
 		//Darwin d = new Darwin(s);
 		String[] temp = {
 				"./Creatures/Rover.txt", 
-				//"./Creatures/Rover.txt", 
-				//"./Creatures/Rover.txt",
-				//"./Creatures/Rover.txt",
+				"./Creatures/Rover.txt", 
+				"./Creatures/Rover.txt",
+				"./Creatures/Rover.txt",
+				"./Creatures/Rover.txt",
 				"./Creatures/Flytrap.txt", 
-				//"./Creatures/Flytrap.txt",
-				//"./Creatures/Food.txt",
+				"./Creatures/Flytrap.txt",
+				"./Creatures/Flytrap.txt", 
 				"./Creatures/Food.txt",
-				//"./Creatures/Hop.txt",
-				//"./Creatures/Hop.txt"
+				"./Creatures/Food.txt",
+				"./Creatures/Food.txt",
+				"./Creatures/Hop.txt",
+				"./Creatures/Hop.txt"
 				
 		};
 		
