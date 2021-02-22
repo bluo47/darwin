@@ -1,0 +1,10 @@
+IfSameTest
+red
+hop
+ifsame 4
+infect
+left
+go 1
+
+
+
