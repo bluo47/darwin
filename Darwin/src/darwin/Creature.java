@@ -89,93 +89,43 @@ public class Creature {
 		Position adjacentSq = pos.getAdjacent(dir);
 		String speciesName = species.getName();
 
+		//put the creature on the WorldMap
+		world.set(pos, this);
+		WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+
+		
+		//boolean hasMoved = false;
+		
+		//while ( hasMoved) {
 
 
+			//HOP
+			if( tempOpcode == 1) {
 
-		//HOP
-		if( tempOpcode == 1) {
+				// only moves if the adjacent square exists in the world matrix
+				// and is unoccupied
+				if( world.inRange(adjacentSq) && (world.get(adjacentSq) == null)) {
 
-			// only moves if the adjacent square exists in the world matrix
-			// and is unoccupied
-			if( world.inRange(adjacentSq) && (world.get(adjacentSq) == null)) {
+					// make our old position null/empty on the WorldMap
+					world.set(pos, null);
+					WorldMap.displaySquare(pos, ' ', 0, "");	
 
-				// make our old position null/empty on the WorldMap
-				world.set(pos, null);
-				WorldMap.displaySquare(pos, ' ', 0, "");	
-
-				// move the creature one square in its current direction
-				setPosition(adjacentSq);
-			}
-
-			// update our new position on the WorldMap
-			world.set(pos, this);
-			WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
-
-			nextInstructNum ++;
-
-			//end the turn
-			return;
-
-		//LEFT	
-		}else if( tempOpcode == 2) {
-			setDirection(leftFrom(dir));
-
-			// make our old position null/empty
-			world.set(pos, null);
-			WorldMap.displaySquare(pos, ' ', 0, "");
-
-			// update our new position on the WorldMap
-			world.set(pos, this);
-			WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
-
-			nextInstructNum ++;
-
-			//end the turn
-			return;
-
-
-		//RIGHT
-		}else if( tempOpcode == 3) {
-			setDirection(rightFrom(dir));
-
-			// make our old position null/empty
-			world.set(pos, null);
-			WorldMap.displaySquare(pos, ' ', 0, "");
-
-			// update our new position on the WorldMap
-			world.set(pos, this);
-			WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
-
-			nextInstructNum ++;
-
-			//end the turn
-			return;
-
-		//INFECT
-		}else if( tempOpcode == 4) {			
-
-			// if the adjacent square exists and is occupied,
-			if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
-
-				String adjName = world.get(adjacentSq).species().getName();
-				// if the adjacent square is occupied by an enemy,
-				// (not of the same creature) infect the enemy!
-				if (!adjName.equals(speciesName)) {
-
-					// create the new creature and put it in the world, adjacent to our creature
-					Creature infectedCreature = world.get(adjacentSq);
-					infectedCreature.species = species;
-					infectedCreature.world = world;
-					infectedCreature.pos = adjacentSq;
-					infectedCreature.dir = dir;
-
-					world.set(adjacentSq, infectedCreature);
-
-					// begin the newly infected creature at step n of the host's program
-					infectedCreature.nextInstructNum = tempAddress;
+					// move the creature one square in its current direction
+					setPosition(adjacentSq);
 				}
 
-			}else {	// if the address is missing, assign it as 1
+				// update our new position on the WorldMap
+				world.set(pos, this);
+				WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+
+				nextInstructNum ++;
+
+				//end the turn
+				return;
+
+				//LEFT	
+			}else if( tempOpcode == 2) {
+				setDirection(leftFrom(dir));
 
 				// make our old position null/empty
 				world.set(pos, null);
@@ -185,91 +135,185 @@ public class Creature {
 				world.set(pos, this);
 				WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
 
+				nextInstructNum ++;
 
-				if ( tempAddress == 0) {
-					nextInstructNum = 1;
+				//end the turn
+				return;
+
+			//RIGHT
+			}else if( tempOpcode == 3) {
+				setDirection(rightFrom(dir));
+
+				// make our old position null/empty
+				world.set(pos, null);
+				WorldMap.displaySquare(pos, ' ', 0, "");
+
+				// update our new position on the WorldMap
+				world.set(pos, this);
+				WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+
+				nextInstructNum ++;
+
+				//end the turn
+				//return;
+				return;
+
+			//INFECT
+			}else if( tempOpcode == 4) {			
+
+				// if the adjacent square exists and is occupied,
+				if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
+
+					String adjName = world.get(adjacentSq).species().getName();
+					
+					// if the adjacent square is occupied by an ENEMY,
+					// (not of the same creature) infect the enemy!
+					if (!adjName.equals(speciesName)) {
+
+						// create the new creature
+						Creature infectedCreature = world.get(adjacentSq);
+						infectedCreature.species = species;
+						infectedCreature.world = world;
+						infectedCreature.pos = adjacentSq;
+						infectedCreature.dir = dir;
+
+						//remove the old creature from the World
+						world.set(adjacentSq, null);
+						WorldMap.displaySquare(adjacentSq, ' ', 0, "");
+						
+						//put it in the world, adjacent to our creature
+						world.set(adjacentSq, infectedCreature);
+						WorldMap.displaySquare(adjacentSq, species.getSpeciesChar(), dir, species.getColor());
+
+						// begin the newly infected creature at step n of the host's program
+						infectedCreature.nextInstructNum = tempAddress++;
+						
+						
+						// make our old position null/empty
+						world.set(pos, null);
+						WorldMap.displaySquare(pos, ' ', 0, "");
+
+						// update our new position on the WorldMap
+						world.set(pos, this);
+						WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
+						
+						nextInstructNum = tempAddress;
+						
+						
+					}
+
 				}else {
-					nextInstructNum = tempAddress;
-				}				
-			}
-			//end the turn
-			return;
 
-		//IFEMPTY
-		}else if( tempOpcode == 5) {
+					// make our old position null/empty
+					world.set(pos, null);
+					WorldMap.displaySquare(pos, ' ', 0, "");
 
-			// if the adjacent square exists and is UNOCCUPIED,
-			// update the next instruction to the provided address
-			if( world.inRange(adjacentSq) && world.get(adjacentSq) == null) {	
-				nextInstructNum = tempAddress;
+					// update our new position on the WorldMap
+					world.set(pos, this);
+					WorldMap.displaySquare(pos, species.getSpeciesChar(), dir, species.getColor());
 
-			}else { //otherwise, proceed to the next sequential instruction
-				nextInstructNum ++;
-			}
 
-		//IFWALL
-		}else if( tempOpcode == 6) {
-
-			// if the adjacent square does not exist, (creature is facing
-			// a wall), update the next instruction to the provided address
-			if( !world.inRange(adjacentSq)) {	
-				nextInstructNum = tempAddress;
-			}else { //otherwise, proceed to the next sequential instruction
-				nextInstructNum ++;
-			}
-
-		//IFSAME
-		}else if( tempOpcode == 7) {
-
-			// if the adjacent square exists and is occupied,
-			if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
-
-				String adjName = world.get(adjacentSq).species().getName();
-
-				// if the adjacent square is occupied by a creature
-				// of the same species, update the next instruction to the provided address
-				if ( adjName.equals(speciesName)) {	
-					nextInstructNum = tempAddress;
+					if ( tempAddress == 0) {
+						nextInstructNum = 1;
+					}else {
+						nextInstructNum = tempAddress;
+					}				
 				}
-			}else {//otherwise, proceed to the next sequential instruction
-				nextInstructNum ++;
-			}
+				//end the turn
+				return;
 
-		//IFENEMY
-		}else if( tempOpcode == 8) {
+			//IFEMPTY
+			}else if( tempOpcode == 5) {
 
-			// if the adjacent square exists and is occupied,
-			if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
-
-				String adjName = world.get(adjacentSq).species().getName();
-
-				// if the adjacent square is occupied by a creature
-				// of a DIFFERENT species, update the next instruction 
-				// to the provided address
-				if ( !adjName.equals(speciesName)) {	
+				// if the adjacent square exists and is UNOCCUPIED,
+				// update the next instruction to the provided address
+				if( world.inRange(adjacentSq) && world.get(adjacentSq) == null) {	
 					nextInstructNum = tempAddress;
+					this.takeOneTurn();
+
+				}else { //otherwise, proceed to the next sequential instruction
+					nextInstructNum ++;
+					this.takeOneTurn();
 				}
-			}else { //otherwise, proceed to the next sequential instruction
-				nextInstructNum ++;			
-			}
 
-		//IFRANDOM, a.k.a. 'free will'
-		}else if( tempOpcode == 9) {
-			Random rand = new Random();
-			int int_random = rand.nextInt(100);
+			//IFWALL
+			}else if( tempOpcode == 6) {
 
-			// if the random number is even, update the next 
-			// instruction to the provided address
-			if (int_random % 2 == 0) {
+				// if the adjacent square does not exist, (creature is facing
+				// a wall), update the next instruction to the provided address
+				if( !world.inRange(adjacentSq)) {	
+					nextInstructNum = tempAddress;
+					this.takeOneTurn();
+					
+				}else { //otherwise, proceed to the next sequential instruction
+					nextInstructNum ++;
+					this.takeOneTurn();
+				}
+
+			//IFSAME
+			}else if( tempOpcode == 7) {
+
+				// if the adjacent square exists and is occupied,
+				if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
+
+					String adjName = world.get(adjacentSq).species().getName();
+
+					// if the adjacent square is occupied by a creature
+					// of the same species, update the next instruction to the provided address
+					if ( adjName.equals(speciesName)) {	
+						nextInstructNum = tempAddress;
+						this.takeOneTurn();
+					}
+				}else {//otherwise, proceed to the next sequential instruction
+					nextInstructNum ++;
+					this.takeOneTurn();
+				}
+
+				//IFENEMY
+			}else if( tempOpcode == 8) {
+
+				// if the adjacent square exists and is occupied,
+				if( world.inRange(adjacentSq) && world.get(adjacentSq) != null) {
+
+					String adjName = world.get(adjacentSq).species().getName();
+
+					// if the adjacent square is occupied by a creature
+					// of a DIFFERENT species, update the next instruction 
+					// to the provided address
+					if ( !adjName.equals(speciesName)) {	
+						nextInstructNum = tempAddress;
+						this.takeOneTurn();
+					}
+				}else { //otherwise, proceed to the next sequential instruction
+					nextInstructNum ++;
+					this.takeOneTurn();
+				}
+
+			//IFRANDOM, a.k.a. 'free will'
+			}else if( tempOpcode == 9) {
+				Random rand = new Random();
+				int int_random = rand.nextInt(100);
+
+				// if the random number is even, update the next 
+				// instruction to the provided address
+				if (int_random % 2 == 0) {
+					nextInstructNum = tempAddress;
+					this.takeOneTurn();
+					
+				}else { //otherwise, proceed to the next sequential instruction
+					nextInstructNum ++;
+					this.takeOneTurn();
+					
+				}
+
+			//GO	
+			} else if (tempOpcode == 10) {
 				nextInstructNum = tempAddress;
-			}else { //otherwise, proceed to the next sequential instruction
-				nextInstructNum ++;
+				this.takeOneTurn();
 			}
-
-		//GO	
-		} else if (tempOpcode == 10) {
-			nextInstructNum = tempAddress;
-		}
+			
+			
+		//}
 
 	}
 
@@ -289,8 +333,10 @@ public class Creature {
 		return (direction + 1) % 4;
 	}
 
+
+	/*
 	public static void main (String[] args) {
-		
+
 		//WorldMap wmap;
 		//wmap.createWorldMap(10,10);
 
@@ -348,7 +394,8 @@ public class Creature {
 			c3.takeOneTurn();  
 
 			System.out.println(c3.pos); //
-			System.out.println(c3.dir); //				
+			System.out.println(c3.dir); //		
+
 
 			/*
 			// testing infect n in the CASE WITH NO ENEMY
@@ -394,10 +441,10 @@ public class Creature {
 
 			System.out.println(c3.pos); //
 			System.out.println(c3.dir); //	
-			 */
+	 */
 
 
-			/*
+	/*
 		// testing with enemy in the CASE WITH NO ENEMY
 		BufferedReader in = new BufferedReader(new FileReader("Creatures/IfEnemyTest.txt"));
 		Species ifEnemyTest =  new Species(in);
@@ -575,12 +622,12 @@ public class Creature {
 
 		System.out.println(c2.dir); //1
 
-			 */
+	 */
 
 
 
 
-			/*
+	/*
 			BufferedReader in = new BufferedReader(new FileReader("Creatures/Hop.txt"));
 			Species hop =  new Species(in);
 
@@ -610,16 +657,16 @@ public class Creature {
 
 			System.out.println(c1.pos); //(3,0)
 			System.out.println(c1.dir); //0
-			 */
+	 */
 
 
-
+	/*
 		} catch (FileNotFoundException e) {
 			System.err.println("File not found");
 			System.err.println(e.getMessage());
-		}
+		}*/
 
 
 
-	}
+
 }

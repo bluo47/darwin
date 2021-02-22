@@ -24,54 +24,52 @@ import java.io.*;
  */
 class Darwin {
 	private World world;
-	private static int rows;
+	private static int rows; 
 	private static int cols;
 	ArrayList<Creature> CreatureArray;
-	
+	private static int numRounds = 30;
+
 
 
 	public Darwin(String[] speciesFilenames) {
-		
+
 		rows = 10;
 		cols = 10;
-		
-		
-		
+
+
+
 		//initialize world with constructor
-		World world = new World(rows, cols);
-	
+		world = new World(rows, cols);
+		
+		CreatureArray = new ArrayList<Creature>();
+
 		//populate world
 		for( int i = 0; i < speciesFilenames.length; i++) {
 
 			try {
-			BufferedReader in = new BufferedReader(new FileReader(speciesFilenames[i]));
-			Species speciesTemp =  new Species(in);
-			
-			boolean isNull = true;
-			Random rand = new Random();
-			Creature c;
-			
-			//make this go for the length of the array list, then update 
-			//  the index at the end of each while loop if it passes. other
-			// wise, run it again at the same index ya know?
-			
-			while( isNull = true) {
-				int x = rand.nextInt(10);
-				int y = rand.nextInt(10);
-				int dir = rand.nextInt(4);
-				Position pos = new Position(x, y);
-				
-				if ( world.get(pos) == null) {
-					c = new Creature(speciesTemp, world, pos, dir);
-					CreatureArray.add(c);
-				
-					
-				}else {
-					isNull = false;
+				BufferedReader in = new BufferedReader(new FileReader(speciesFilenames[i]));
+				Species speciesTemp =  new Species(in);
+
+				boolean isNull = true;
+				Random rand = new Random();
+				Creature c;
+
+				// run this until the Creature is in an unoccupied position
+				// on the board
+				while( isNull) {
+					// create a random position on the board
+					int x = rand.nextInt(rows);
+					int y = rand.nextInt(cols);
+					int dir = rand.nextInt(4);
+					Position pos = new Position(x, y);
+
+					// if the square is unoccupied, place the Creature there
+					if ( world.get(pos) == null) {
+						c = new Creature(speciesTemp, world, pos, dir);
+						CreatureArray.add(c);
+						isNull = false;
+					}
 				}
-				
-			}
-			
 			}
 			catch (FileNotFoundException e) {
 				System.err.println("File not found");
@@ -80,6 +78,16 @@ class Darwin {
 		}
 
 	}
+	
+
+	
+	public void giveEachCreatureOneTurn() {
+		for( int i = 0; i < CreatureArray.size(); i++) {
+			CreatureArray.get(i).takeOneTurn();
+		}
+			
+	}
+
 
 	/**
 	 * The array passed into main will include the arguments that appeared on the
@@ -102,19 +110,32 @@ class Darwin {
 	public static void main(String s[]) {
 		WorldMap.createWorldMap(10, 10);
 		//Darwin d = new Darwin(s);
-		String[] temp = {"./Creatures/Hop.txt", "./Creatures/Rover.txt"};
+		String[] temp = {
+				"./Creatures/Rover.txt", 
+				"./Creatures/Rover.txt", 
+				"./Creatures/Rover.txt", 
+				"./Creatures/Flytrap.txt", 
+				"./Creatures/Flytrap.txt",
+				"./Creatures/Rover.txt",
+				"./Creatures/Food.txt",
+				"./Creatures/Food.txt",
+				"./Creatures/Hop.txt"
+				
+		};
+		
+		//"./Creatures/Rover.txt"
 		Darwin d = new Darwin(temp);
 		d.simulate();
 	}
-
 	
 	public void simulate() {
-		//for (int rounds = 0; rounds < numRounds; rounds++) {
-			//  		giveEachCreatureOneTurn(); 
-			  //		WorldMap.pause(500); 
-			  	//} 
+		for (int rounds = 0; rounds < numRounds; rounds++) {
+		  		giveEachCreatureOneTurn(); 
+		  		WorldMap.pause(1000); 
+		} 
 		// don't forget to call pause somewhere in the simulator's loop...
 		// make sure to pause using WorldMap so that TAs can modify pause time
 		// when grading
 	}
+
 }

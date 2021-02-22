@@ -59,7 +59,6 @@ public class Species {
 					}else if( instruction.equals("ifsame")) {
 						opcode = 7;
 					}else if( instruction.equals("ifenemy")) {
-						System.out.println("working");
 						opcode = 8;
 					}else if( instruction.equals("ifrandom")) {
 						opcode = 9;
