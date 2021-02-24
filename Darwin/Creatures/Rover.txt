@@ -8,7 +8,7 @@ go 1
 ifrandom 9
 left
 go 1
-right
+right 
 go 1
 infect
 go 1
