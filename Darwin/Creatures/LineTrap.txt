@@ -1,0 +1,11 @@
+LineTrap
+dark gray
+hop
+ifenemy 6
+ifwall 4
+left
+left
+infect
+go 1
+
+
