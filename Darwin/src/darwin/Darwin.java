@@ -30,7 +30,11 @@ class Darwin {
 	private static int numRounds = 30;
 
 
-
+	/**
+	 * Takes command line input and adds them to the Darwin stimulation.
+	 * 
+	 * @param speciesFilenames
+	 */
 	public Darwin(String[] speciesFilenames) {
 
 		rows = 15;
@@ -46,8 +50,6 @@ class Darwin {
 		//populate world
 		for( int i = 0; i < speciesFilenames.length; i++) {
 			
-			
-
 			for( int j = 0; j < 10; j++) {
 
 				try {
@@ -88,7 +90,10 @@ class Darwin {
 	}
 
 
-
+	/**
+	 * Gives each creature one turn.
+	 * 
+	 */
 	public void giveEachCreatureOneTurn() {
 		for( int i = 0; i < CreatureArray.size(); i++) {
 			CreatureArray.get(i).takeOneTurn();
@@ -119,33 +124,18 @@ class Darwin {
 	public static void main(String s[]) {
 		WorldMap.createWorldMap(15, 15);
 		Darwin d = new Darwin(s);
-		/*
-		String[] temp = {
-				//"./Creatures/Rover.txt", 
-				//"./Creatures/Rover.txt", 
-				"./Creatures/Rover.txt",
-				//"./Creatures/Rover.txt",
-				//"./Creatures/Rover.txt",
-				//	"./Creatures/Flytrap.txt", 
-				//"./Creatures/Flytrap.txt", 
-				"./Creatures/Food.txt",
-				"./Creatures/Hop.txt"
-
-		};*/
-
-		//"./Creatures/Rover.txt"
-		//Darwin d = new Darwin(temp);
 		d.simulate();
 	}
 
+	/**
+	 * Runs the Darwin simulation for numRounds amount of times.
+	 * 
+	 */
 	public void simulate() {
 		for (int rounds = 0; rounds < numRounds; rounds++) {
 			giveEachCreatureOneTurn(); 
 			WorldMap.pause(1000); 
 		} 
-		// don't forget to call pause somewhere in the simulator's loop...
-		// make sure to pause using WorldMap so that TAs can modify pause time
-		// when grading
 	}
 
 }
