@@ -51,8 +51,10 @@ class Darwin {
 			for( int j = 0; j < 10; j++) {
 
 				try {
-					BufferedReader in = new BufferedReader(new FileReader(speciesFilenames[i]));
-					System.out.println(in);
+					
+					String formattedSpeciesFilename = "./Creatures/" + speciesFilenames[i];
+					
+					BufferedReader in = new BufferedReader(new FileReader(formattedSpeciesFilename));
 					Species speciesTemp =  new Species(in);
 
 					boolean isNull = true;
