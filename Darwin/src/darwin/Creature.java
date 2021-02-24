@@ -306,14 +306,38 @@ public class Creature {
 				}
 
 			//GO	
-			} else if (tempOpcode == 10) {
+			}else if( tempOpcode == 10) {
 				nextInstructNum = tempAddress;
 				this.takeOneTurn();
-			}
 			
-			
-		//}
+			//EXTRA CREDIT: IF2ENEMY
+			}else if( tempOpcode == 11) {
+				
+				Position adjacentSq2 = adjacentSq.getAdjacent(dir);
 
+				// if the 2nd adjacent square exists and is occupied,
+				if( world.inRange(adjacentSq2) && world.get(adjacentSq2) != null) {
+
+					String adj2Name = world.get(adjacentSq2).species().getName();
+
+					// if the 2nd adjacent square is occupied by a creature
+					// of a DIFFERENT species, update the next instruction 
+					// to the provided address
+					if ( !adj2Name.equals(speciesName)) {	
+						nextInstructNum = tempAddress;
+						this.takeOneTurn();
+					
+					}else {
+						nextInstructNum ++;
+						this.takeOneTurn();
+					}
+
+					
+				}else { //otherwise, proceed to the next sequential instruction
+					nextInstructNum ++;
+					this.takeOneTurn();
+				}
+			}
 	}
 
 

@@ -45,11 +45,14 @@ class Darwin {
 
 		//populate world
 		for( int i = 0; i < speciesFilenames.length; i++) {
+			
+			
 
 			for( int j = 0; j < 10; j++) {
 
 				try {
 					BufferedReader in = new BufferedReader(new FileReader(speciesFilenames[i]));
+					System.out.println(in);
 					Species speciesTemp =  new Species(in);
 
 					boolean isNull = true;
@@ -110,9 +113,11 @@ class Darwin {
 	 * Darwin(s); before submitting. If you want to use relative filenames for the
 	 * creatures they should be of the form "./Creatures/Hop.txt".
 	 */
+	
 	public static void main(String s[]) {
 		WorldMap.createWorldMap(15, 15);
-		//Darwin d = new Darwin(s);
+		Darwin d = new Darwin(s);
+		/*
 		String[] temp = {
 				//"./Creatures/Rover.txt", 
 				//"./Creatures/Rover.txt", 
@@ -124,10 +129,10 @@ class Darwin {
 				"./Creatures/Food.txt",
 				"./Creatures/Hop.txt"
 
-		};
+		};*/
 
 		//"./Creatures/Rover.txt"
-		Darwin d = new Darwin(temp);
+		//Darwin d = new Darwin(temp);
 		d.simulate();
 	}
 
